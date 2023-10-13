@@ -1886,10 +1886,10 @@ hoist-non-react-statics@^3.3.1:
   dependencies:
     react-is "^16.7.0"
 
-hoon-ds@^1.0.25:
-  version "1.0.25"
-  resolved "https://registry.yarnpkg.com/hoon-ds/-/hoon-ds-1.0.25.tgz#cf6afd4d9e20aa4827be4fb9d66751b48b162fa0"
-  integrity sha512-L+MKHYbHNT7Dp40h3W/sRX1yGpSb3h/AcBCFeWhx/Cwm/4I+VOrOR71dyk7UjW2BQ3pC3Eudd/GJEo0SPB4SZw==
+hoon-ds@^1.0.30:
+  version "1.0.30"
+  resolved "https://registry.yarnpkg.com/hoon-ds/-/hoon-ds-1.0.30.tgz#8a836e40b7f6db74e28cfb7846101577d4d85b13"
+  integrity sha512-l09/YlZYAPzlc/3/1dN734RxO2OORGjf4WQjiPwXxnApm66GCKJUxSnQVN77GYhtXWvproZulKsLsffjDc8k9g==
   dependencies:
     "@emotion/react" "^11.11.1"
     "@emotion/styled" "^11.11.0"

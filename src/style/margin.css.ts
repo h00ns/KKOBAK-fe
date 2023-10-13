@@ -38,3 +38,8 @@ export const mb_4 = style({
 export const mb_5 = style({
   marginBottom: '40px',
 });
+
+// padding top
+export const pd_t_9 = style({
+  paddingTop: '72px',
+});

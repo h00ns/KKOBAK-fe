@@ -1,13 +1,23 @@
-import { r_gap_1 } from '@/style/display.css';
-import { mt_2 } from '@/style/margin.css';
+import { flx_between, r_gap_1 } from '@/style/display.css';
+import { mt_1, mt_2 } from '@/style/margin.css';
 import { Button, Input } from 'hoon-ds';
 import { useState } from 'react';
+import { text_button } from './index.css';
+import { useNavigate } from 'react-router-dom';
+import { SIGN_UP } from '@/constants/routes/routes';
+
+type LoginFormType = {
+  email: string;
+  password: string;
+};
 
 export default function Form() {
-  const [form, setForm] = useState({ email: '', password: '' });
+  const navigate = useNavigate();
+
+  const [form, setForm] = useState<LoginFormType>({ email: '', password: '' });
 
   /**
-   *  form 변화 핸들링
+   *  form 변화 핸들링ka
    */
   const handleFormChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -18,23 +28,37 @@ export default function Form() {
     }));
   };
 
+  /**
+   *  로그인 submit
+   */
+  const handleFormSubmit = () => {};
+
   return (
-    <div className={`${mt_2} ${r_gap_1}`}>
+    <form
+      className={`${mt_2} ${r_gap_1}`}
+      onSubmit={(e) => {
+        e.preventDefault();
+        handleFormSubmit();
+      }}>
       <Input
         name="email"
         value={form.email}
         placeholder="이메일을 입력해주세요"
         onChange={handleFormChange}
       />
-      <div>
-        <Input
-          name="password"
-          value={form.password}
-          placeholder="비밀번호를 입력해주세요"
-          onChange={handleFormChange}
-        />
+      <Input
+        name="password"
+        value={form.password}
+        placeholder="비밀번호를 입력해주세요"
+        onChange={handleFormChange}
+      />
+      <Button className={mt_1} text="로그인하기" />
+      <div className={flx_between}>
+        <span className={text_button}>비밀번호 찾기</span>
+        <span className={text_button} onClick={() => navigate(SIGN_UP)}>
+          회원가입
+        </span>
       </div>
-      <Button text="로그인하기" />
-    </div>
+    </form>
   );
 }
