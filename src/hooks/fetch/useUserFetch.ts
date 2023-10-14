@@ -1,6 +1,11 @@
 import { ApiError } from '@/apis/types';
-import { checkEmailApi, signUpApi } from '@/apis/user';
-import { checkEmailPayload, signUpPayload } from '@/apis/user/types';
+import { checkEmailApi, patchPasswordApi, sendResetCodeApi, signUpApi } from '@/apis/user';
+import {
+  checkEmailPayload,
+  patchPasswordPayload,
+  sendResetCodePayload,
+  signUpPayload,
+} from '@/apis/user/types';
 import { useMutation } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 
@@ -45,5 +50,50 @@ export const useSignUpFetch = () => {
 
   return {
     signUpMutate,
+  };
+};
+
+/**
+ *  비밀번호 재설정 메일 발송 API
+ *  @function useSendResetCodeFetch
+ *  @param {string} email - 이메일
+ */
+export const useSendResetCodeFetch = () => {
+  const { mutate: sendResetCodeMutate } = useMutation(
+    ['sendResetCode'],
+    ({ email }: sendResetCodePayload) => sendResetCodeApi({ email }),
+    {
+      onError: (error: AxiosError<ApiError>) => {
+        alert(error.response?.data.message);
+      },
+    },
+  );
+
+  return {
+    sendResetCodeMutate,
+  };
+};
+
+/**
+ *  비밀번호 재설정 Fetch
+ *  @function usePatchPasswordFetch
+ *  @param {string} email - 이메일
+ *  @param {string} password - 비밀번호
+ *  @param {string} resetCode - 재설정 코드
+ */
+export const usePatchPasswordFetch = () => {
+  const { mutate: patchPasswordMutate } = useMutation(
+    ['patchPassword'],
+    ({ email, password, resetCode }: patchPasswordPayload) =>
+      patchPasswordApi({ email, password, resetCode }),
+    {
+      onError: (error: AxiosError<ApiError>) => {
+        alert(error.response?.data.message);
+      },
+    },
+  );
+
+  return {
+    patchPasswordMutate,
   };
 };

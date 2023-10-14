@@ -1,5 +1,11 @@
 import API from '..';
-import { checkEmailPayload, checkEmailResponse, signUpPayload } from './types';
+import {
+  checkEmailPayload,
+  checkEmailResponse,
+  patchPasswordPayload,
+  sendResetCodePayload,
+  signUpPayload,
+} from './types';
 import { AxiosResponse, AxiosError } from 'axios';
 import { ApiError, ApiResponse } from '../types';
 
@@ -26,5 +32,31 @@ export const checkEmailApi = ({
  *  @param {string} password - 비밀번호
  */
 export const signUpApi = ({ email, name, password }: signUpPayload) => {
-  return API.post(`/user`, { email, name, password });
+  return API.post(`/user`, {
+    email,
+    name,
+    password,
+  });
+};
+
+/**
+ *  비밀번호 재설정 메일 발송 API
+ *  @function sendResetCodeApi
+ *  @param {string} email - 이메일
+ */
+export const sendResetCodeApi = ({ email }: sendResetCodePayload) => {
+  return API.post(`/user/reset`, {
+    email,
+  });
+};
+
+/**
+ *  비밀번호 재설정 API
+ *  @function patchPasswordApi
+ *  @param {string} email - 이메일
+ *  @param {string} password - 비밀번호
+ *  @param {string} resetCode - 재설정 코드
+ */
+export const patchPasswordApi = ({ email, password, resetCode }: patchPasswordPayload) => {
+  return API.patch(`/user/password`, { email, password, resetCode });
 };
