@@ -4,7 +4,7 @@ import { Button, Input } from 'hoon-ds';
 import { useState } from 'react';
 import { text_button } from './index.css';
 import { useNavigate } from 'react-router-dom';
-import { FIND, HOME, SIGN_UP } from '@/constants/routes/routes';
+import { HOME, RESET, SIGN_UP } from '@/constants/routes/routes';
 import { useLoginFetch } from '@/hooks/fetch/useAuthFetch';
 
 type LoginFormType = {
@@ -67,7 +67,7 @@ export default function Form() {
       />
       <Button className={mt_1} text="로그인하기" />
       <div className={flx_between}>
-        <span className={text_button} onClick={() => navigate(FIND)}>
+        <span className={text_button} onClick={() => navigate(RESET)}>
           비밀번호 찾기
         </span>
         <span className={text_button} onClick={() => navigate(SIGN_UP)}>

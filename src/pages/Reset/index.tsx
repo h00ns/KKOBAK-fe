@@ -3,7 +3,7 @@ import { flx_col_center } from '@/style/display.css';
 import { pd_t_9 } from '@/style/margin.css';
 import Form from './Form';
 
-const Find = () => {
+const Reset = () => {
   return (
     <div className={`${flx_col_center} ${pd_t_9}`}>
       <IntroTitle />
@@ -12,4 +12,4 @@ const Find = () => {
   );
 };
 
-export default Find;
+export default Reset;
