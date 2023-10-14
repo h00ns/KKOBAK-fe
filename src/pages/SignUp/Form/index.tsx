@@ -1,4 +1,5 @@
 import LabelInput from '@/components/blocks/LabelInput';
+import { useCheckEmailFetch, useSignUpFetch } from '@/hooks/fetch/useUserFetch';
 import { c_gap_1, r_gap_1 } from '@/style/display.css';
 import { mt_1, mt_2 } from '@/style/margin.css';
 import { Button, ButtonVariant, Input, InputVariant } from 'hoon-ds';
@@ -18,6 +19,9 @@ export default function Form() {
   });
   const [isEmailVerified, setIsEmailVerified] = useState(false);
 
+  const { checkEmailMutate } = useCheckEmailFetch();
+  const { signUpMutate } = useSignUpFetch();
+
   /**
    *  form 변화 핸들링ka
    */
@@ -34,13 +38,17 @@ export default function Form() {
    *  이메일 인증 submit
    */
   const checkEmailDuplicate = () => {
-    setIsEmailVerified(true);
+    const { email } = form;
+    checkEmailMutate({ email }, { onSuccess: () => setIsEmailVerified(true) });
   };
 
   /**
    *  회원가입 submit
    */
-  const handleFormSubmit = () => {};
+  const handleFormSubmit = () => {
+    const { email, name, password } = form;
+    signUpMutate({ email, name, password }, { onSuccess: () => alert('회원가입 성공') });
+  };
 
   return (
     <div className={`${mt_2} ${r_gap_1}`}>
