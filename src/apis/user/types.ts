@@ -11,3 +11,13 @@ export interface signUpPayload {
   name: string;
   password: string;
 }
+
+export interface sendResetCodePayload {
+  email: string;
+}
+
+export interface patchPasswordPayload {
+  email: string;
+  password: string;
+  resetCode: string;
+}

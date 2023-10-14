@@ -39,7 +39,6 @@ API.interceptors.response.use(
       if (refreshToken) {
         return await getAccessTokenApi({ refreshToken })
           .then((res) => {
-            console.log(123);
             const { accessToken } = res.data.result;
 
             // accessToken set
@@ -51,7 +50,7 @@ API.interceptors.response.use(
           .catch(() => {
             localStorage.removeItem('accessToken');
             localStorage.removeItem('refreshToken');
-            window.location.href = '/login';
+            window.location.href = '/';
           });
       }
     }
