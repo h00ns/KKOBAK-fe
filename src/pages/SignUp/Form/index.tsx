@@ -1,8 +1,11 @@
 import LabelInput from '@/components/blocks/LabelInput';
+import { LOGIN } from '@/constants/routes/routes';
+import { useCheckEmailFetch, useSignUpFetch } from '@/hooks/fetch/useUserFetch';
 import { c_gap_1, r_gap_1 } from '@/style/display.css';
 import { mt_1, mt_2 } from '@/style/margin.css';
 import { Button, ButtonVariant, Input, InputVariant } from 'hoon-ds';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 type SignUpFormType = {
   email: string;
@@ -11,12 +14,17 @@ type SignUpFormType = {
 };
 
 export default function Form() {
+  const navigate = useNavigate();
+
   const [form, setForm] = useState<SignUpFormType>({
     email: '',
     name: '',
     password: '',
   });
   const [isEmailVerified, setIsEmailVerified] = useState(false);
+
+  const { checkEmailMutate } = useCheckEmailFetch();
+  const { signUpMutate } = useSignUpFetch();
 
   /**
    *  form 변화 핸들링ka
@@ -34,13 +42,31 @@ export default function Form() {
    *  이메일 인증 submit
    */
   const checkEmailDuplicate = () => {
-    setIsEmailVerified(true);
+    const { email } = form;
+    checkEmailMutate(
+      { email },
+      {
+        onSuccess: () => {
+          setIsEmailVerified(true);
+        },
+      },
+    );
   };
 
   /**
    *  회원가입 submit
    */
-  const handleFormSubmit = () => {};
+  const handleFormSubmit = () => {
+    const { email, name, password } = form;
+    signUpMutate(
+      { email, name, password },
+      {
+        onSuccess: () => {
+          navigate(LOGIN);
+        },
+      },
+    );
+  };
 
   return (
     <div className={`${mt_2} ${r_gap_1}`}>
@@ -80,7 +106,7 @@ export default function Form() {
         />
       </LabelInput>
       <Button
-        disabled={!form.email || !form.name || !form.password || !isEmailVerified}
+        // disabled={!form.email || !form.name || !form.password || !isEmailVerified}
         className={mt_1}
         text="회원가입"
         onClick={handleFormSubmit}
