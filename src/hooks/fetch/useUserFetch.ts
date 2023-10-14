@@ -1,6 +1,8 @@
+import { ApiError } from '@/apis/types';
 import { checkEmailApi, signUpApi } from '@/apis/user';
 import { checkEmailPayload, signUpPayload } from '@/apis/user/types';
 import { useMutation } from '@tanstack/react-query';
+import { AxiosError } from 'axios';
 
 /**
  *  이메일 중복 체크 Fetch
@@ -12,8 +14,8 @@ export const useCheckEmailFetch = () => {
     ['checkEmail'],
     ({ email }: checkEmailPayload) => checkEmailApi({ email }),
     {
-      onError: (error) => {
-        console.log(error);
+      onError: (error: AxiosError<ApiError>) => {
+        console.log(error.response?.data.message);
       },
     },
   );
@@ -35,8 +37,8 @@ export const useSignUpFetch = () => {
     ['signUp'],
     ({ email, name, password }: signUpPayload) => signUpApi({ email, name, password }),
     {
-      onError: (error) => {
-        console.log(error);
+      onError: (error: AxiosError<ApiError>) => {
+        console.log(error.response?.data.message);
       },
     },
   );
