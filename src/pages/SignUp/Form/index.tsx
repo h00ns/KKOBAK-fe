@@ -49,9 +49,6 @@ export default function Form() {
         onSuccess: () => {
           setIsEmailVerified(true);
         },
-        onError: (err) => {
-          alert(err.response?.data.message);
-        },
       },
     );
   };

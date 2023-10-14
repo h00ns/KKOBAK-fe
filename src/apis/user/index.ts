@@ -1,8 +1,7 @@
-import { queryFilter } from '@/utils/api';
 import API from '..';
 import { checkEmailPayload, checkEmailResponse, signUpPayload } from './types';
 import { AxiosResponse, AxiosError } from 'axios';
-import { ApiError } from '../types';
+import { ApiError, ApiResponse } from '../types';
 
 /**
  *  이메일 중복 체크 API
@@ -11,9 +10,11 @@ import { ApiError } from '../types';
  */
 export const checkEmailApi = ({
   email,
-}: checkEmailPayload): Promise<AxiosResponse<checkEmailResponse, AxiosError<ApiError>>> => {
-  return API.get(`/user/email`, {
-    params: queryFilter({ email }),
+}: checkEmailPayload): Promise<
+  AxiosResponse<ApiResponse<checkEmailResponse>, AxiosError<ApiError>>
+> => {
+  return API.post(`/user/email`, {
+    email,
   });
 };
 

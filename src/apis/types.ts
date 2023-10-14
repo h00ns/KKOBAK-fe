@@ -1,9 +1,11 @@
-export interface ApiResponse {
-  result: any;
+export interface ApiResponse<T> {
+  result: T;
   message: string;
   code: number;
 }
 
-export interface ApiError extends ApiResponse {
+export interface ApiError {
   result: null;
+  message: string;
+  code: number;
 }

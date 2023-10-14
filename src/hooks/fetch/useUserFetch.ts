@@ -15,7 +15,7 @@ export const useCheckEmailFetch = () => {
     ({ email }: checkEmailPayload) => checkEmailApi({ email }),
     {
       onError: (error: AxiosError<ApiError>) => {
-        console.log(error.response?.data.message);
+        alert(error.response?.data.message);
       },
     },
   );
@@ -38,7 +38,7 @@ export const useSignUpFetch = () => {
     ({ email, name, password }: signUpPayload) => signUpApi({ email, name, password }),
     {
       onError: (error: AxiosError<ApiError>) => {
-        console.log(error.response?.data.message);
+        alert(error.response?.data.message);
       },
     },
   );
