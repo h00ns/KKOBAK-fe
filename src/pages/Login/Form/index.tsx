@@ -2,11 +2,11 @@ import { flx_between } from '@/style/display.css';
 import { mt_1 } from '@/style/margin.css';
 import { Button, Input } from 'hoon-ds';
 import { useState } from 'react';
-import { google_btn, login_form, text_btn } from './index.css';
+import { kakao_btn, login_form, text_btn } from './index.css';
 import { useNavigate } from 'react-router-dom';
-import { HOME, RESET, SIGN_UP } from '@/constants/routes/routes';
-import { useGoogleLoginFetch, useLoginFetch } from '@/hooks/fetch/useAuthFetch';
-import GoogleImg from '@/assets/images/google.png';
+import { HOME, KAKAO_AUTH_URL, RESET, SIGN_UP } from '@/constants/routes/routes';
+import { useLoginFetch } from '@/hooks/fetch/useAuthFetch';
+import KakaoImg from '@/assets/images/kakao.png';
 
 type LoginFormType = {
   email: string;
@@ -19,7 +19,6 @@ export default function Form() {
   const [form, setForm] = useState<LoginFormType>({ email: '', password: '' });
 
   const { loginMutate } = useLoginFetch();
-  const { googleLoginMutate } = useGoogleLoginFetch();
 
   /**
    *  form 변화 핸들링
@@ -48,10 +47,10 @@ export default function Form() {
   };
 
   /**
-   *  구글 로그인 submit
+   *  카카오 로그인 페이지로
    */
-  const handleGoogleLogin = () => {
-    googleLoginMutate(void 0, {});
+  const handleKakaoLogin = () => {
+    window.location.href = KAKAO_AUTH_URL;
   };
 
   return (
@@ -75,9 +74,9 @@ export default function Form() {
         onChange={handleFormChange}
       />
       <Button className={mt_1} text="로그인하기" />
-      <button className={google_btn} type="button" onClick={handleGoogleLogin}>
-        <img width={16} height={16} src={GoogleImg} alt="google" />
-        Google로 로그인
+      <button className={kakao_btn} type="button" onClick={handleKakaoLogin}>
+        <img width={20} height={20} src={KakaoImg} alt="google" />
+        카카오톡으로 로그인
       </button>
       <div className={flx_between}>
         <span className={text_btn} onClick={() => navigate(RESET)}>

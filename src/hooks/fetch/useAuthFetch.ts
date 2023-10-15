@@ -1,7 +1,7 @@
-import { loginApi } from '@/apis/auth';
+import { getKakaoTokenApi, getKakaoUserInfoApi, loginApi, verifyKakaoLoginApi } from '@/apis/auth';
 import { LoginPayload } from '@/apis/auth/types';
 import { ApiError } from '@/apis/types';
-import { googleLoginApi } from '@/apis/user';
+import { HOME } from '@/constants/routes/routes';
 import { useMutation } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 
@@ -38,13 +38,35 @@ export const useLoginFetch = () => {
 };
 
 /**
- *  Google Oauth 로그인 Fetch
- *  @function useGoogleLoginFetch
+ *  Kakao Oauth 로그인 Fetch
+ *  @function useKakaoLoginFetch
+ *  @param {string} code - 카카오 인가 코드
  */
-export const useGoogleLoginFetch = () => {
-  const { mutate: googleLoginMutate } = useMutation(['googleLogin'], () => googleLoginApi(), {});
+export const useKakaoLoginFetch = () => {
+  const { mutate: kakaoLoginMutate } = useMutation(
+    ['getKakaoToken'],
+    ({ code }: { code: string }) => getKakaoTokenApi({ code }),
+    {
+      onSuccess: async (res) => {
+        const { access_token } = res.data;
+
+        const userResponse = await getKakaoUserInfoApi({ accessToken: access_token });
+
+        const email = userResponse.data.kakao_account.email;
+        const name = userResponse.data.kakao_account.profile.nickname;
+
+        const tokenResponse = await verifyKakaoLoginApi({ email, name });
+
+        const { accessToken, refreshToken } = tokenResponse.data.result;
+        localStorage.setItem('accessToken', accessToken);
+        localStorage.setItem('refreshToken', refreshToken);
+
+        window.location.href = HOME;
+      },
+    },
+  );
 
   return {
-    googleLoginMutate,
+    kakaoLoginMutate,
   };
 };

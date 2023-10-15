@@ -60,11 +60,3 @@ export const sendResetCodeApi = ({ email }: sendResetCodePayload) => {
 export const patchPasswordApi = ({ email, password, resetCode }: patchPasswordPayload) => {
   return API.patch(`/user/password`, { email, password, resetCode });
 };
-
-/**
- *  Google Oauth 로그인 API
- *  @function googleLoginApi
- */
-export const googleLoginApi = () => {
-  return API.get(`/auth/google`);
-};

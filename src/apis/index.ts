@@ -8,11 +8,22 @@ const API = axios.create({
   },
 });
 
+const isCancelToken = (url: string): boolean => {
+  if (url === 'https://kapi.kakao.com/v2/user/me') {
+    return true;
+  }
+  if (url.includes('auth')) {
+    return true;
+  }
+
+  return false;
+};
+
 /** request */
 API.interceptors.request.use(
   function (config: InternalAxiosRequestConfig) {
     const accessToken = localStorage.getItem('accessToken');
-    if (accessToken) {
+    if (accessToken && !isCancelToken(config.url as string)) {
       config.headers['Authorization'] = `Bearer ${accessToken}`;
     }
 
