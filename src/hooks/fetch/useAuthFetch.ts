@@ -1,6 +1,7 @@
 import { loginApi } from '@/apis/auth';
 import { LoginPayload } from '@/apis/auth/types';
 import { ApiError } from '@/apis/types';
+import { googleLoginApi } from '@/apis/user';
 import { useMutation } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 
@@ -33,5 +34,17 @@ export const useLoginFetch = () => {
 
   return {
     loginMutate,
+  };
+};
+
+/**
+ *  Google Oauth 로그인 Fetch
+ *  @function useGoogleLoginFetch
+ */
+export const useGoogleLoginFetch = () => {
+  const { mutate: googleLoginMutate } = useMutation(['googleLogin'], () => googleLoginApi(), {});
+
+  return {
+    googleLoginMutate,
   };
 };

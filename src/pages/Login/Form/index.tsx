@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { google_btn, text_btn } from './index.css';
 import { useNavigate } from 'react-router-dom';
 import { HOME, RESET, SIGN_UP } from '@/constants/routes/routes';
-import { useLoginFetch } from '@/hooks/fetch/useAuthFetch';
+import { useGoogleLoginFetch, useLoginFetch } from '@/hooks/fetch/useAuthFetch';
 import GoogleImg from '@/assets/images/google.png';
 
 type LoginFormType = {
@@ -19,6 +19,7 @@ export default function Form() {
   const [form, setForm] = useState<LoginFormType>({ email: '', password: '' });
 
   const { loginMutate } = useLoginFetch();
+  const { googleLoginMutate } = useGoogleLoginFetch();
 
   /**
    *  form 변화 핸들링
@@ -35,7 +36,7 @@ export default function Form() {
   /**
    *  로그인 submit
    */
-  const handleFormSubmit = () => {
+  const handleLogin = () => {
     loginMutate(
       { ...form },
       {
@@ -46,12 +47,19 @@ export default function Form() {
     );
   };
 
+  /**
+   *  구글 로그인 submit
+   */
+  const handleGoogleLogin = () => {
+    googleLoginMutate(void 0, {});
+  };
+
   return (
     <form
       className={`${mt_2} ${r_gap_1}`}
       onSubmit={(e) => {
         e.preventDefault();
-        handleFormSubmit();
+        handleLogin();
       }}>
       <Input
         name="email"
@@ -67,7 +75,7 @@ export default function Form() {
         onChange={handleFormChange}
       />
       <Button className={mt_1} text="로그인하기" />
-      <button className={google_btn} type="button">
+      <button className={google_btn} type="button" onClick={handleGoogleLogin}>
         <img width={16} height={16} src={GoogleImg} alt="google" />
         Google로 로그인
       </button>
