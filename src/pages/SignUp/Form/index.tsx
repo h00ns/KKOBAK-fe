@@ -1,11 +1,12 @@
 import LabelInput from '@/components/blocks/LabelInput';
 import { LOGIN } from '@/constants/routes/routes';
 import { useCheckEmailFetch, useSignUpFetch } from '@/hooks/fetch/useUserFetch';
-import { c_gap_1, r_gap_1 } from '@/style/display.css';
-import { mt_1, mt_2 } from '@/style/margin.css';
+import { flx_c_gap_1 } from '@/style/display.css';
+import { mt_1 } from '@/style/margin.css';
 import { Button, ButtonVariant, Input, InputVariant } from 'hoon-ds';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { signUp_form } from './index.css';
 
 type SignUpFormType = {
   email: string;
@@ -69,9 +70,9 @@ export default function Form() {
   };
 
   return (
-    <div className={`${mt_2} ${r_gap_1}`}>
+    <div className={signUp_form}>
       <LabelInput title="이메일">
-        <div className={c_gap_1}>
+        <div className={flx_c_gap_1}>
           <Input
             variant={isEmailVerified ? InputVariant.FIXED : InputVariant.DEFAULT}
             name="email"

@@ -22,28 +22,16 @@ export const flx_col_center = style([
   },
 ]);
 
-export const r_gap_1 = style([
+export const flx_r_gap_1 = style([
   flx_col,
   {
     rowGap: '8px',
   },
 ]);
-export const r_gap_2 = style([
-  flx_col,
-  {
-    rowGap: '16px',
-  },
-]);
 
-export const c_gap_1 = style([
+export const flx_c_gap_1 = style([
   flx,
   {
     columnGap: '8px',
-  },
-]);
-export const c_gap_2 = style([
-  flx,
-  {
-    columnGap: '16px',
   },
 ]);

@@ -7,39 +7,34 @@ export const m_auto = style({
 
 // margin top
 export const mt_1 = style({
-  marginTop: '8px',
+  marginTop: 8,
 });
 export const mt_2 = style({
-  marginTop: '16px',
+  marginTop: 16,
 });
 export const mt_3 = style({
-  marginTop: '24px',
+  marginTop: 24,
 });
 export const mt_4 = style({
-  marginTop: '32px',
+  marginTop: 32,
 });
 export const mt_5 = style({
-  marginTop: '32px',
+  marginTop: 32,
 });
 
 // margin bottom
 export const mb_1 = style({
-  marginBottom: '8px',
+  marginBottom: 8,
 });
 export const mb_2 = style({
-  marginBottom: '16px',
+  marginBottom: 16,
 });
 export const mb_3 = style({
-  marginBottom: '24px',
+  marginBottom: 24,
 });
 export const mb_4 = style({
-  marginBottom: '32px',
+  marginBottom: 32,
 });
 export const mb_5 = style({
-  marginBottom: '40px',
-});
-
-// padding top
-export const pd_t_9 = style({
-  paddingTop: '72px',
+  marginBottom: 40,
 });
