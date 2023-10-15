@@ -5,7 +5,6 @@ export const layoutStyle = style({
   width: '100%',
   maxWidth: '400px',
   margin: '0 auto',
-  padding: '0 24px',
   boxSizing: 'border-box',
   boxShadow: Shadow.MEDIUM,
   borderRadius: Radius.MEDIUM,

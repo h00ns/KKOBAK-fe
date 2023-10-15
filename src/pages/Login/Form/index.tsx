@@ -1,8 +1,8 @@
-import { flx_between, r_gap_1 } from '@/style/display.css';
-import { mt_1, mt_2 } from '@/style/margin.css';
+import { flx_between } from '@/style/display.css';
+import { mt_1 } from '@/style/margin.css';
 import { Button, Input } from 'hoon-ds';
 import { useState } from 'react';
-import { google_btn, text_btn } from './index.css';
+import { google_btn, login_form, text_btn } from './index.css';
 import { useNavigate } from 'react-router-dom';
 import { HOME, RESET, SIGN_UP } from '@/constants/routes/routes';
 import { useGoogleLoginFetch, useLoginFetch } from '@/hooks/fetch/useAuthFetch';
@@ -56,7 +56,7 @@ export default function Form() {
 
   return (
     <form
-      className={`${mt_2} ${r_gap_1}`}
+      className={login_form}
       onSubmit={(e) => {
         e.preventDefault();
         handleLogin();

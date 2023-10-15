@@ -1,6 +1,9 @@
-import { c_gap_1, flx_center } from '@/style/display.css';
+import { flx_c_gap_1, flx_center, flx_r_gap_1 } from '@/style/display.css';
+import { mt_2 } from '@/style/margin.css';
 import { style } from '@vanilla-extract/css';
 import { Radius, gray, white } from 'hoon-ds';
+
+export const login_form = style([mt_2, flx_r_gap_1]);
 
 export const text_btn = style({
   fontSize: '14px',
@@ -13,7 +16,7 @@ export const text_btn = style({
 });
 
 export const google_btn = style([
-  c_gap_1,
+  flx_c_gap_1,
   flx_center,
   {
     padding: '9px 12px',
