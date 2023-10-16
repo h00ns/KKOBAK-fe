@@ -1,6 +1,7 @@
 import Header from '@/components/layouts/Header';
 import Calendar from './Calendar';
 import ResultBox from './ResultBox';
+import { withAuth } from '@/components/hocs/withAuth';
 
 const Home = () => {
   return (
@@ -12,4 +13,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default withAuth(Home);

@@ -1,6 +1,7 @@
 import IntroTitle from '@/components/blocks/IntroTitle';
 import Form from './Form';
 import { pageLayout } from './index.css';
+import { withUnAuth } from '@/components/hocs/withUnAuth';
 
 const SignUp = () => {
   return (
@@ -11,4 +12,4 @@ const SignUp = () => {
   );
 };
 
-export default SignUp;
+export default withUnAuth(SignUp);

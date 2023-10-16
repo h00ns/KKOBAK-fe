@@ -3,6 +3,7 @@ import { Indicator } from 'hoon-ds';
 import { useEffect, useRef } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { pageLayout } from './index.css';
+import { withUnAuth } from '@/components/hocs/withUnAuth';
 
 const Kakao = () => {
   const navigate = useNavigate();
@@ -28,4 +29,4 @@ const Kakao = () => {
   );
 };
 
-export default Kakao;
+export default withUnAuth(Kakao);
