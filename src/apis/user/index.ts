@@ -6,7 +6,7 @@ import {
   sendResetCodePayload,
   signUpPayload,
 } from './types';
-import { AxiosResponse, AxiosError } from 'axios';
+import { AxiosResponse } from 'axios';
 import { ApiError, ApiResponse } from '../types';
 
 /**
@@ -16,9 +16,7 @@ import { ApiError, ApiResponse } from '../types';
  */
 export const checkEmailApi = ({
   email,
-}: checkEmailPayload): Promise<
-  AxiosResponse<ApiResponse<checkEmailResponse>, AxiosError<ApiError>>
-> => {
+}: checkEmailPayload): Promise<AxiosResponse<ApiResponse<checkEmailResponse>, ApiError>> => {
   return API.post(`/user/email`, {
     email,
   });

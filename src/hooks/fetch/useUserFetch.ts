@@ -7,7 +7,6 @@ import {
   signUpPayload,
 } from '@/apis/user/types';
 import { useMutation } from '@tanstack/react-query';
-import { AxiosError } from 'axios';
 
 /**
  *  이메일 중복 체크 Fetch
@@ -19,8 +18,8 @@ export const useCheckEmailFetch = () => {
     ['checkEmail'],
     ({ email }: checkEmailPayload) => checkEmailApi({ email }),
     {
-      onError: (error: AxiosError<ApiError>) => {
-        alert(error.response?.data.message);
+      onError: (error: ApiError) => {
+        alert(error.message);
       },
     },
   );
@@ -42,8 +41,8 @@ export const useSignUpFetch = () => {
     ['signUp'],
     ({ email, name, password }: signUpPayload) => signUpApi({ email, name, password }),
     {
-      onError: (error: AxiosError<ApiError>) => {
-        alert(error.response?.data.message);
+      onError: (error: ApiError) => {
+        alert(error.message);
       },
     },
   );
@@ -63,8 +62,8 @@ export const useSendResetCodeFetch = () => {
     ['sendResetCode'],
     ({ email }: sendResetCodePayload) => sendResetCodeApi({ email }),
     {
-      onError: (error: AxiosError<ApiError>) => {
-        alert(error.response?.data.message);
+      onError: (error: ApiError) => {
+        alert(error.message);
       },
     },
   );
@@ -87,8 +86,8 @@ export const usePatchPasswordFetch = () => {
     ({ email, password, resetCode }: patchPasswordPayload) =>
       patchPasswordApi({ email, password, resetCode }),
     {
-      onError: (error: AxiosError<ApiError>) => {
-        alert(error.response?.data.message);
+      onError: (error: ApiError) => {
+        alert(error.message);
       },
     },
   );

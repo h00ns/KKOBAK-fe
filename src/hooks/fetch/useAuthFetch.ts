@@ -3,7 +3,6 @@ import { GetKakaoTokenPayload, LoginPayload } from '@/apis/auth/types';
 import { ApiError } from '@/apis/types';
 import { HOME } from '@/constants/routes/routes';
 import { useMutation } from '@tanstack/react-query';
-import { AxiosError } from 'axios';
 
 /**
  *  로그인 Fetch
@@ -26,8 +25,8 @@ export const useLoginFetch = () => {
         localStorage.setItem('accessToken', accessToken);
         localStorage.setItem('refreshToken', refreshToken);
       },
-      onError: (error: AxiosError<ApiError>) => {
-        alert(error.response?.data.message);
+      onError: (error: ApiError) => {
+        alert(error.message);
       },
     },
   );
