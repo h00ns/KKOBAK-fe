@@ -3,7 +3,7 @@ import { Radius, Shadow } from 'hoon-ds';
 
 export const layoutStyle = style({
   width: '100%',
-  maxWidth: '400px',
+  maxWidth: '420px',
   margin: '0 auto',
   boxSizing: 'border-box',
   boxShadow: Shadow.MEDIUM,

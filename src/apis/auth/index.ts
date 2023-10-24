@@ -1,4 +1,4 @@
-import { AxiosError, AxiosResponse } from 'axios';
+import { AxiosResponse } from 'axios';
 import API from '..';
 import {
   GetAccessTokenPayload,
@@ -22,7 +22,7 @@ import { CLIENT_ID, REDIRECT_URI } from '@/constants/routes/routes';
 export const loginApi = ({
   email,
   password,
-}: LoginPayload): Promise<AxiosResponse<ApiResponse<LoginResponse>, AxiosError<ApiError>>> => {
+}: LoginPayload): Promise<AxiosResponse<ApiResponse<LoginResponse>, ApiError>> => {
   return API.post(`/auth/login`, { email, password });
 };
 
@@ -33,7 +33,7 @@ export const loginApi = ({
 export const getAccessTokenApi = ({
   refreshToken,
 }: GetAccessTokenPayload): Promise<
-  AxiosResponse<ApiResponse<GetAccessTokenResponse>, AxiosError<ApiError>>
+  AxiosResponse<ApiResponse<GetAccessTokenResponse>, ApiError>
 > => {
   return API.post(`/auth/refresh`, { refreshToken });
 };
@@ -45,7 +45,7 @@ export const getAccessTokenApi = ({
  */
 export const getKakaoTokenApi = ({
   code,
-}: GetKakaoTokenPayload): Promise<AxiosResponse<GetKakaoTokenResponse, AxiosError<ApiError>>> => {
+}: GetKakaoTokenPayload): Promise<AxiosResponse<GetKakaoTokenResponse, ApiError>> => {
   return API.post(
     `https://kauth.kakao.com/oauth/token`,
     {
@@ -89,8 +89,6 @@ export const getKakaoUserInfoApi = ({ accessToken }: GetKakaoUserInfoPayload) =>
 export const verifyKakaoLoginApi = ({
   email,
   name,
-}: VerifyKakaoLoginPayload): Promise<
-  AxiosResponse<ApiResponse<LoginResponse>, AxiosError<ApiError>>
-> => {
+}: VerifyKakaoLoginPayload): Promise<AxiosResponse<ApiResponse<LoginResponse>, ApiError>> => {
   return API.post('/auth/kakao', { email, name });
 };

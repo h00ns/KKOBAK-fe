@@ -2,6 +2,8 @@ import { useKakaoLoginFetch } from '@/hooks/fetch/useAuthFetch';
 import { Indicator } from 'hoon-ds';
 import { useEffect, useRef } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
+import { pageLayout } from './index.css';
+import { withUnAuth } from '@/components/hocs/withUnAuth';
 
 const Kakao = () => {
   const navigate = useNavigate();
@@ -11,6 +13,7 @@ const Kakao = () => {
 
   const { kakaoLoginMutate } = useKakaoLoginFetch();
 
+  /** 인가 코드를 가져와 카카오 로그인 */
   useEffect(() => {
     if (!code) return;
     if (isRequest.current) return;
@@ -20,10 +23,10 @@ const Kakao = () => {
   }, [code, kakaoLoginMutate, navigate]);
 
   return (
-    <div>
+    <div className={pageLayout}>
       <Indicator />
     </div>
   );
 };
 
-export default Kakao;
+export default withUnAuth(Kakao);

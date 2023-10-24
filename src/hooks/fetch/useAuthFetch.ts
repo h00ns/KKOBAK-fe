@@ -1,9 +1,8 @@
 import { getKakaoTokenApi, getKakaoUserInfoApi, loginApi, verifyKakaoLoginApi } from '@/apis/auth';
-import { LoginPayload } from '@/apis/auth/types';
+import { GetKakaoTokenPayload, LoginPayload } from '@/apis/auth/types';
 import { ApiError } from '@/apis/types';
 import { HOME } from '@/constants/routes/routes';
 import { useMutation } from '@tanstack/react-query';
-import { AxiosError } from 'axios';
 
 /**
  *  로그인 Fetch
@@ -26,8 +25,8 @@ export const useLoginFetch = () => {
         localStorage.setItem('accessToken', accessToken);
         localStorage.setItem('refreshToken', refreshToken);
       },
-      onError: (error: AxiosError<ApiError>) => {
-        alert(error.response?.data.message);
+      onError: (error: ApiError) => {
+        alert(error.message);
       },
     },
   );
@@ -44,19 +43,22 @@ export const useLoginFetch = () => {
  */
 export const useKakaoLoginFetch = () => {
   const { mutate: kakaoLoginMutate } = useMutation(
-    ['getKakaoToken'],
-    ({ code }: { code: string }) => getKakaoTokenApi({ code }),
+    ['kakaoLogin'],
+    ({ code }: GetKakaoTokenPayload) => getKakaoTokenApi({ code }),
     {
       onSuccess: async (res) => {
         const { access_token } = res.data;
 
+        // 카카오 유저 정보
         const userResponse = await getKakaoUserInfoApi({ accessToken: access_token });
 
         const email = userResponse.data.kakao_account.email;
         const name = userResponse.data.kakao_account.profile.nickname;
 
+        // 서비스 토큰 발급
         const tokenResponse = await verifyKakaoLoginApi({ email, name });
 
+        // 토큰 set
         const { accessToken, refreshToken } = tokenResponse.data.result;
         localStorage.setItem('accessToken', accessToken);
         localStorage.setItem('refreshToken', refreshToken);

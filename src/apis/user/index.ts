@@ -1,12 +1,14 @@
 import API from '..';
 import {
-  checkEmailPayload,
-  checkEmailResponse,
-  patchPasswordPayload,
-  sendResetCodePayload,
-  signUpPayload,
+  CheckEmailPayload,
+  CheckEmailResponse,
+  GetUserInfoResponse,
+  PatchPasswordPayload,
+  PatchSalaryDayPayload,
+  SendResetCodePayload,
+  SignUpPayload,
 } from './types';
-import { AxiosResponse, AxiosError } from 'axios';
+import { AxiosResponse } from 'axios';
 import { ApiError, ApiResponse } from '../types';
 
 /**
@@ -16,9 +18,7 @@ import { ApiError, ApiResponse } from '../types';
  */
 export const checkEmailApi = ({
   email,
-}: checkEmailPayload): Promise<
-  AxiosResponse<ApiResponse<checkEmailResponse>, AxiosError<ApiError>>
-> => {
+}: CheckEmailPayload): Promise<AxiosResponse<ApiResponse<CheckEmailResponse>, ApiError>> => {
   return API.post(`/user/email`, {
     email,
   });
@@ -31,7 +31,7 @@ export const checkEmailApi = ({
  *  @param {string} name - 이름
  *  @param {string} password - 비밀번호
  */
-export const signUpApi = ({ email, name, password }: signUpPayload) => {
+export const signUpApi = ({ email, name, password }: SignUpPayload) => {
   return API.post(`/user`, {
     email,
     name,
@@ -44,7 +44,9 @@ export const signUpApi = ({ email, name, password }: signUpPayload) => {
  *  @function sendResetCodeApi
  *  @param {string} email - 이메일
  */
-export const sendResetCodeApi = ({ email }: sendResetCodePayload) => {
+export const sendResetCodeApi = ({
+  email,
+}: SendResetCodePayload): Promise<AxiosResponse<ApiResponse<null>, ApiError>> => {
   return API.post(`/user/reset`, {
     email,
   });
@@ -57,6 +59,27 @@ export const sendResetCodeApi = ({ email }: sendResetCodePayload) => {
  *  @param {string} password - 비밀번호
  *  @param {string} resetCode - 재설정 코드
  */
-export const patchPasswordApi = ({ email, password, resetCode }: patchPasswordPayload) => {
+export const patchPasswordApi = ({ email, password, resetCode }: PatchPasswordPayload) => {
   return API.patch(`/user/password`, { email, password, resetCode });
+};
+
+/**
+ *  자신의 유저 정보 가져오기 API
+ *  @function getUserInfoApi
+ */
+export const getUserInfoApi = (): Promise<
+  AxiosResponse<ApiResponse<GetUserInfoResponse>, ApiError>
+> => {
+  return API.get(`/user`);
+};
+
+/**
+ *  월급일 변경 API
+ *  @function patchSalaryDayApi
+ *  @param {string} salaryDay - 월급일
+ */
+export const patchSalaryDayApi = ({
+  salaryDay,
+}: PatchSalaryDayPayload): Promise<AxiosResponse<ApiResponse<null>, ApiError>> => {
+  return API.patch(`/user/salary`, { salaryDay });
 };
