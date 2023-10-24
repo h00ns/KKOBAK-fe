@@ -3,12 +3,14 @@ import {
   checkEmailApi,
   getUserInfoApi,
   patchPasswordApi,
+  patchSalaryDayApi,
   sendResetCodeApi,
   signUpApi,
 } from '@/apis/user';
 import {
   CheckEmailPayload,
   PatchPasswordPayload,
+  PatchSalaryDayPayload,
   SendResetCodePayload,
   SignUpPayload,
 } from '@/apis/user/types';
@@ -116,5 +118,26 @@ export const useGetUserInfoFetch = () => {
 
   return {
     getUserInfoMutate,
+  };
+};
+
+/**
+ *  월급일 변경 Fetch
+ *  @function usePatchSalaryDayFetch
+ *  @param {string} salaryDay - 월급일
+ */
+export const usePatchSalaryDayFetch = () => {
+  const { mutate: patchSalaryDayMutate } = useMutation(
+    ['patchSalaryDay'],
+    ({ salaryDay }: PatchSalaryDayPayload) => patchSalaryDayApi({ salaryDay }),
+    {
+      onError: (error: ApiError) => {
+        alert(error.message);
+      },
+    },
+  );
+
+  return {
+    patchSalaryDayMutate,
   };
 };

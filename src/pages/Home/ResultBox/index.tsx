@@ -1,7 +1,30 @@
 import { TypoVariant, Typography, gray, green, red } from 'hoon-ds';
 import { result_box, result_item, text_red } from './index.css';
+import { GetUserInfoResponse } from '@/apis/user/types';
+import { useQueryClient } from '@tanstack/react-query';
 
 export default function ResultBox() {
+  const queryClient = useQueryClient();
+  const user = queryClient.getQueryData<GetUserInfoResponse>(['user']);
+
+  /**
+   *  월급일 D-day 계산
+   */
+  const getSalaryDayCount = () => {
+    if (!user?.salaryDay) return;
+
+    const today = new Date();
+    const lastDayOfMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0).getDate();
+
+    // 이번달이 30일까지있지만 월급일을 31로 입력한경우
+    const isThirty = lastDayOfMonth === 30 && user?.salaryDay === 31;
+    const salaryDay = isThirty ? 30 : user?.salaryDay;
+
+    const diff = salaryDay - today.getDate();
+
+    return diff > 0 ? diff : diff + lastDayOfMonth;
+  };
+
   return (
     <div className={result_box}>
       <div className={result_item}>
@@ -23,9 +46,11 @@ export default function ResultBox() {
         </Typography>
       </div>
       <div className={result_item}>
-        <div>
-          월급까지 ... <span className={text_red}>D-15</span>
-        </div>
+        {user?.salaryDay && (
+          <div>
+            월급까지 ... <span className={text_red}>D-{getSalaryDayCount()}</span>
+          </div>
+        )}
       </div>
     </div>
   );

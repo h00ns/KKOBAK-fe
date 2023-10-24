@@ -4,6 +4,7 @@ import {
   CheckEmailResponse,
   GetUserInfoResponse,
   PatchPasswordPayload,
+  PatchSalaryDayPayload,
   SendResetCodePayload,
   SignUpPayload,
 } from './types';
@@ -43,7 +44,9 @@ export const signUpApi = ({ email, name, password }: SignUpPayload) => {
  *  @function sendResetCodeApi
  *  @param {string} email - 이메일
  */
-export const sendResetCodeApi = ({ email }: SendResetCodePayload) => {
+export const sendResetCodeApi = ({
+  email,
+}: SendResetCodePayload): Promise<AxiosResponse<ApiResponse<null>, ApiError>> => {
   return API.post(`/user/reset`, {
     email,
   });
@@ -68,4 +71,15 @@ export const getUserInfoApi = (): Promise<
   AxiosResponse<ApiResponse<GetUserInfoResponse>, ApiError>
 > => {
   return API.get(`/user`);
+};
+
+/**
+ *  월급일 변경 API
+ *  @function patchSalaryDayApi
+ *  @param {string} salaryDay - 월급일
+ */
+export const patchSalaryDayApi = ({
+  salaryDay,
+}: PatchSalaryDayPayload): Promise<AxiosResponse<ApiResponse<null>, ApiError>> => {
+  return API.patch(`/user/salary`, { salaryDay });
 };

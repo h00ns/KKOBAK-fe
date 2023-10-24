@@ -29,3 +29,7 @@ export interface GetUserInfoResponse {
   salaryDay: number | null;
   createAt: string;
 }
+
+export interface PatchSalaryDayPayload {
+  salaryDay: number;
+}

@@ -16,6 +16,7 @@ export const withAuth =
     const navigate = useNavigate();
 
     const queryClient = useQueryClient();
+    const user = queryClient.getQueryData<GetUserInfoResponse>(['user']);
     const { getUserInfoMutate } = useGetUserInfoFetch();
 
     useEffect(() => {
@@ -27,16 +28,18 @@ export const withAuth =
         return;
       }
 
-      getUserInfoMutate(void 0, {
-        onSuccess: (res) => {
-          queryClient.setQueryData<GetUserInfoResponse>(['user'], res.data.result);
-        },
-        onError: () => {
-          localStorage.removeItem('accessToken');
-          localStorage.removeItem('refreshToken');
-          navigate(LOGIN);
-        },
-      });
+      if (!user) {
+        getUserInfoMutate(void 0, {
+          onSuccess: (res) => {
+            queryClient.setQueryData<GetUserInfoResponse>(['user'], res.data.result);
+          },
+          onError: () => {
+            localStorage.removeItem('accessToken');
+            localStorage.removeItem('refreshToken');
+            navigate(LOGIN);
+          },
+        });
+      }
     }, []);
 
     return <Component {...props} />;
