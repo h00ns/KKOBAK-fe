@@ -1,10 +1,11 @@
 import API from '..';
 import {
-  checkEmailPayload,
-  checkEmailResponse,
-  patchPasswordPayload,
-  sendResetCodePayload,
-  signUpPayload,
+  CheckEmailPayload,
+  CheckEmailResponse,
+  GetUserInfoResponse,
+  PatchPasswordPayload,
+  SendResetCodePayload,
+  SignUpPayload,
 } from './types';
 import { AxiosResponse } from 'axios';
 import { ApiError, ApiResponse } from '../types';
@@ -16,7 +17,7 @@ import { ApiError, ApiResponse } from '../types';
  */
 export const checkEmailApi = ({
   email,
-}: checkEmailPayload): Promise<AxiosResponse<ApiResponse<checkEmailResponse>, ApiError>> => {
+}: CheckEmailPayload): Promise<AxiosResponse<ApiResponse<CheckEmailResponse>, ApiError>> => {
   return API.post(`/user/email`, {
     email,
   });
@@ -29,7 +30,7 @@ export const checkEmailApi = ({
  *  @param {string} name - 이름
  *  @param {string} password - 비밀번호
  */
-export const signUpApi = ({ email, name, password }: signUpPayload) => {
+export const signUpApi = ({ email, name, password }: SignUpPayload) => {
   return API.post(`/user`, {
     email,
     name,
@@ -42,7 +43,7 @@ export const signUpApi = ({ email, name, password }: signUpPayload) => {
  *  @function sendResetCodeApi
  *  @param {string} email - 이메일
  */
-export const sendResetCodeApi = ({ email }: sendResetCodePayload) => {
+export const sendResetCodeApi = ({ email }: SendResetCodePayload) => {
   return API.post(`/user/reset`, {
     email,
   });
@@ -55,6 +56,16 @@ export const sendResetCodeApi = ({ email }: sendResetCodePayload) => {
  *  @param {string} password - 비밀번호
  *  @param {string} resetCode - 재설정 코드
  */
-export const patchPasswordApi = ({ email, password, resetCode }: patchPasswordPayload) => {
+export const patchPasswordApi = ({ email, password, resetCode }: PatchPasswordPayload) => {
   return API.patch(`/user/password`, { email, password, resetCode });
+};
+
+/**
+ *  자신의 유저 정보 가져오기 API
+ *  @function getUserInfoApi
+ */
+export const getUserInfoApi = (): Promise<
+  AxiosResponse<ApiResponse<GetUserInfoResponse>, ApiError>
+> => {
+  return API.get(`/user`);
 };

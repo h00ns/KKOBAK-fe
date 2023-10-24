@@ -1,4 +1,7 @@
+import { GetUserInfoResponse } from '@/apis/user/types';
 import { LOGIN } from '@/constants/routes/routes';
+import { useGetUserInfoFetch } from '@/hooks/fetch/useUserFetch';
+import { useQueryClient } from '@tanstack/react-query';
 import { ComponentType, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -12,14 +15,29 @@ export const withAuth =
   <P extends object>(props: P) => {
     const navigate = useNavigate();
 
+    const queryClient = useQueryClient();
+    const { getUserInfoMutate } = useGetUserInfoFetch();
+
     useEffect(() => {
       const accessToken = localStorage.getItem('accessToken');
       const refreshToken = localStorage.getItem('refreshToken');
 
       if (!accessToken || !refreshToken) {
         navigate(LOGIN);
+        return;
       }
-    });
+
+      getUserInfoMutate(void 0, {
+        onSuccess: (res) => {
+          queryClient.setQueryData<GetUserInfoResponse>(['user'], res.data.result);
+        },
+        onError: () => {
+          localStorage.removeItem('accessToken');
+          localStorage.removeItem('refreshToken');
+          navigate(LOGIN);
+        },
+      });
+    }, []);
 
     return <Component {...props} />;
   };

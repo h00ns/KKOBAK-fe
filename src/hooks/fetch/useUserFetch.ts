@@ -1,10 +1,16 @@
 import { ApiError } from '@/apis/types';
-import { checkEmailApi, patchPasswordApi, sendResetCodeApi, signUpApi } from '@/apis/user';
 import {
-  checkEmailPayload,
-  patchPasswordPayload,
-  sendResetCodePayload,
-  signUpPayload,
+  checkEmailApi,
+  getUserInfoApi,
+  patchPasswordApi,
+  sendResetCodeApi,
+  signUpApi,
+} from '@/apis/user';
+import {
+  CheckEmailPayload,
+  PatchPasswordPayload,
+  SendResetCodePayload,
+  SignUpPayload,
 } from '@/apis/user/types';
 import { useMutation } from '@tanstack/react-query';
 
@@ -16,7 +22,7 @@ import { useMutation } from '@tanstack/react-query';
 export const useCheckEmailFetch = () => {
   const { mutate: checkEmailMutate } = useMutation(
     ['checkEmail'],
-    ({ email }: checkEmailPayload) => checkEmailApi({ email }),
+    ({ email }: CheckEmailPayload) => checkEmailApi({ email }),
     {
       onError: (error: ApiError) => {
         alert(error.message);
@@ -39,7 +45,7 @@ export const useCheckEmailFetch = () => {
 export const useSignUpFetch = () => {
   const { mutate: signUpMutate } = useMutation(
     ['signUp'],
-    ({ email, name, password }: signUpPayload) => signUpApi({ email, name, password }),
+    ({ email, name, password }: SignUpPayload) => signUpApi({ email, name, password }),
     {
       onError: (error: ApiError) => {
         alert(error.message);
@@ -60,7 +66,7 @@ export const useSignUpFetch = () => {
 export const useSendResetCodeFetch = () => {
   const { mutate: sendResetCodeMutate } = useMutation(
     ['sendResetCode'],
-    ({ email }: sendResetCodePayload) => sendResetCodeApi({ email }),
+    ({ email }: SendResetCodePayload) => sendResetCodeApi({ email }),
     {
       onError: (error: ApiError) => {
         alert(error.message);
@@ -83,7 +89,7 @@ export const useSendResetCodeFetch = () => {
 export const usePatchPasswordFetch = () => {
   const { mutate: patchPasswordMutate } = useMutation(
     ['patchPassword'],
-    ({ email, password, resetCode }: patchPasswordPayload) =>
+    ({ email, password, resetCode }: PatchPasswordPayload) =>
       patchPasswordApi({ email, password, resetCode }),
     {
       onError: (error: ApiError) => {
@@ -94,5 +100,21 @@ export const usePatchPasswordFetch = () => {
 
   return {
     patchPasswordMutate,
+  };
+};
+
+/**
+ *  자신의 유저 정보 가져오기 Fetch
+ *  @function useGetUserInfoFetch
+ */
+export const useGetUserInfoFetch = () => {
+  const { mutate: getUserInfoMutate } = useMutation(['getUserInfo'], () => getUserInfoApi(), {
+    onError: (error: ApiError) => {
+      alert(error.message);
+    },
+  });
+
+  return {
+    getUserInfoMutate,
   };
 };
