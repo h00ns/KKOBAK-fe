@@ -3,4 +3,8 @@ export interface GetRecordPayload {
   month: string;
 }
 
-export interface GetRecordResponse {}
+export interface GetRecordResponse {
+  income: number;
+  outcome: number;
+  balance: number;
+}

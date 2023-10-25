@@ -2,6 +2,7 @@ import { getRecordApi } from '@/apis/record';
 import { GetRecordPayload } from './../../apis/record/types';
 import { useQuery } from '@tanstack/react-query';
 import { ApiError } from '@/apis/types';
+
 /**
  *  해당 달의 통계 가져오기 Fetch
  *  @function useGetRecordFetch
@@ -21,6 +22,7 @@ export const useGetRecordFetch = ({ year, month }: GetRecordPayload) => {
       return result.data.result;
     },
     {
+      keepPreviousData: true,
       onError: (error: ApiError) => {
         alert(error.message);
       },

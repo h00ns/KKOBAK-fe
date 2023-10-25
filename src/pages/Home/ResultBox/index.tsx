@@ -14,6 +14,7 @@ export default function ResultBox() {
   const month = searchParams.get('m') ?? '';
 
   const { recordData } = useGetRecordFetch({ year, month });
+  const { income, outcome, balance } = recordData ?? {};
 
   /**
    *  월급일 D-day 계산
@@ -38,19 +39,19 @@ export default function ResultBox() {
       <div className={result_item}>
         수입
         <Typography variant={TypoVariant.B2} color={green.green3}>
-          0원
+          {income?.toLocaleString()}원
         </Typography>
       </div>
       <div className={result_item}>
         지출
         <Typography variant={TypoVariant.B2} color={red.red2}>
-          0원
+          {outcome?.toLocaleString()}원
         </Typography>
       </div>
       <div className={result_item}>
         잔액
         <Typography variant={TypoVariant.B2} color={gray.gray6}>
-          0원
+          {balance?.toLocaleString()}원
         </Typography>
       </div>
       <div className={result_item}>
