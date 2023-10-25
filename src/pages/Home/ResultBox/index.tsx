@@ -2,10 +2,19 @@ import { TypoVariant, Typography, gray, green, red } from 'hoon-ds';
 import { result_box, result_item, text_red } from './index.css';
 import { GetUserInfoResponse } from '@/apis/user/types';
 import { useQueryClient } from '@tanstack/react-query';
+import { useGetRecordFetch } from '@/hooks/fetch/useRecordFetch';
+import { useSearchParams } from 'react-router-dom';
 
 export default function ResultBox() {
   const queryClient = useQueryClient();
   const user = queryClient.getQueryData<GetUserInfoResponse>(['user']);
+
+  const [searchParams] = useSearchParams();
+  const year = searchParams.get('y') ?? '';
+  const month = searchParams.get('m') ?? '';
+
+  const { recordData } = useGetRecordFetch({ year, month });
+  const { income, outcome, balance } = recordData ?? {};
 
   /**
    *  월급일 D-day 계산
@@ -30,19 +39,19 @@ export default function ResultBox() {
       <div className={result_item}>
         수입
         <Typography variant={TypoVariant.B2} color={green.green3}>
-          1000000원
+          {income?.toLocaleString()}원
         </Typography>
       </div>
       <div className={result_item}>
         지출
         <Typography variant={TypoVariant.B2} color={red.red2}>
-          300000원
+          {outcome?.toLocaleString()}원
         </Typography>
       </div>
       <div className={result_item}>
         잔액
         <Typography variant={TypoVariant.B2} color={gray.gray6}>
-          700000원
+          {balance?.toLocaleString()}원
         </Typography>
       </div>
       <div className={result_item}>
