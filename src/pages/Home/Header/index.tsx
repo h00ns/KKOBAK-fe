@@ -1,29 +1,14 @@
 import { Icon, white } from 'hoon-ds';
 import { date_text, graph_icon, header, icon_wrapper } from './index.css';
-import dayjs from 'dayjs';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
-export default function Header() {
+type Props = {
+  year: number;
+  month: number;
+};
+
+export default function Header({ year, month }: Props) {
   const navigate = useNavigate();
-  const [searchParams] = useSearchParams();
-  const yQuery = searchParams.get('y');
-  const mQuery = searchParams.get('m');
-
-  // 유효한 year인지 확인
-  const isValidYear = (y: string) => {
-    const year = Number(y);
-    return year > 0 && year < 10000;
-  };
-
-  // 유효한 month인지 확인
-  const isValidMont = (m: string) => {
-    const month = Number(m);
-    return month > 0 && month < 13;
-  };
-
-  // month가 없다면 default로 현재 월
-  const year = Number(isValidYear(yQuery ?? '') ? yQuery : dayjs().format('YYYY'));
-  const month = Number(isValidMont(mQuery ?? '') ? mQuery : dayjs().format('M'));
 
   // 이전 달로 이동
   const handlePrevMonth = () => {

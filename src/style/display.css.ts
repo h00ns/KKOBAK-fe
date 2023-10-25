@@ -35,3 +35,7 @@ export const flx_c_gap_1 = style([
     columnGap: '8px',
   },
 ]);
+
+export const grid = style({
+  display: 'grid',
+});

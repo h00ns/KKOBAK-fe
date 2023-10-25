@@ -9,8 +9,8 @@ import { ApiError } from '@/apis/types';
  */
 export const useGetRecordFetch = ({ year, month }: GetRecordPayload) => {
   // default 값은 현재 년도, 현재 월 (year, month가 없을경우 ''로 받음)
-  const currentYear = new Date().getFullYear().toString();
-  const currentMonth = (new Date().getMonth() + 1).toString();
+  const currentYear = new Date().getFullYear();
+  const currentMonth = new Date().getMonth() + 1;
 
   const { data: recordData } = useQuery(
     ['getRecord', year || currentYear, month || currentMonth],

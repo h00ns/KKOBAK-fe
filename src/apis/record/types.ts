@@ -1,6 +1,6 @@
 export interface GetRecordPayload {
-  year: string;
-  month: string;
+  year: number;
+  month: number;
 }
 
 export interface GetRecordResponse {
