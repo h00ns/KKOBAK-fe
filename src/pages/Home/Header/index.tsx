@@ -1,14 +1,12 @@
 import { Icon, white } from 'hoon-ds';
 import { date_text, graph_icon, header, icon_wrapper } from './index.css';
 import { useNavigate } from 'react-router-dom';
+import { useYearMonthState } from '@/store/date';
 
-type Props = {
-  year: number;
-  month: number;
-};
-
-export default function Header({ year, month }: Props) {
+export default function Header() {
   const navigate = useNavigate();
+
+  const { year, month } = useYearMonthState();
 
   // 이전 달로 이동
   const handlePrevMonth = () => {

@@ -3,15 +3,13 @@ import { result_box, result_item, text_red } from './index.css';
 import { GetUserInfoResponse } from '@/apis/user/types';
 import { useQueryClient } from '@tanstack/react-query';
 import { useGetRecordFetch } from '@/hooks/fetch/useRecordFetch';
+import { useYearMonthState } from '@/store/date';
 
-type Props = {
-  year: number;
-  month: number;
-};
-
-export default function ResultBox({ year, month }: Props) {
+export default function ResultBox() {
   const queryClient = useQueryClient();
   const user = queryClient.getQueryData<GetUserInfoResponse>(['user']);
+
+  const { year, month } = useYearMonthState();
 
   const { recordData } = useGetRecordFetch({ year, month });
   const { income, outcome, balance } = recordData ?? {};

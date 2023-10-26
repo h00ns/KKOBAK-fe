@@ -1,15 +1,15 @@
 import { useMemo } from 'react';
 import { calendar_header, calendar_item, calendar_row } from './index.css';
+import { useDateActions, useYearMonthState } from '@/store/date';
 
-type Props = {
-  year: number;
-  month: number;
-};
+export default function Calendar() {
+  const { year, month } = useYearMonthState();
+  const { handleDay } = useDateActions();
 
-export default function Calendar({ year, month }: Props) {
   /** 캘린더 리스트 계산 */
   const calendarList = useMemo(() => {
     const firstDay = new Date(`${year}.${month}.1`).getDay();
+
     const nextFirstDate = new Date(`${year}.${month + 1}.1`);
     const lastDate = new Date(nextFirstDate.setDate(nextFirstDate.getDate() - 1)).getDate();
 
@@ -20,7 +20,6 @@ export default function Calendar({ year, month }: Props) {
         result.push('');
       } else {
         const date = i - firstDay + 1;
-
         if (date > lastDate) {
           result.push('');
         } else {
@@ -38,7 +37,7 @@ export default function Calendar({ year, month }: Props) {
   const handleDayClick = (day: '' | number) => {
     if (!day) return;
 
-    console.log(day);
+    handleDay(day);
   };
 
   return (
@@ -50,8 +49,11 @@ export default function Calendar({ year, month }: Props) {
       </div>
       <div className={calendar_row}>
         {calendarList.map((day, idx) => (
-          <div className={calendar_item} onClick={() => handleDayClick(day)} key={idx}>
-            {day}
+          <div
+            className={calendar_item({ isDay: !!day })}
+            onClick={() => handleDayClick(day)}
+            key={idx}>
+            {day || ''}
           </div>
         ))}
       </div>

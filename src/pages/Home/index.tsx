@@ -9,6 +9,8 @@ import { useQueryClient } from '@tanstack/react-query';
 import { GetUserInfoResponse } from '@/apis/user/types';
 import { useSearchParams } from 'react-router-dom';
 import dayjs from 'dayjs';
+import FormBox from './FormBox';
+import { useDateActions, useDayState } from '@/store/date';
 
 const Home = () => {
   const queryClient = useQueryClient();
@@ -20,21 +22,29 @@ const Home = () => {
   const yQuery = searchParams.get('y') ?? '';
   const mQuery = searchParams.get('m') ?? '';
 
-  // 유효한 year인지 확인
-  const isValidYear = (y: string) => {
-    const year = Number(y);
-    return year > 0 && year < 10000;
-  };
+  const { day } = useDayState();
+  const { handleYear, handleMonth } = useDateActions();
 
-  // 유효한 month인지 확인
-  const isValidMont = (m: string) => {
-    const month = Number(m);
-    return month > 0 && month < 13;
-  };
+  useEffect(() => {
+    // month가 없다면 default로 현재 월
+    const year = Number(_isValidYear(yQuery) ? yQuery : dayjs().format('YYYY'));
+    const month = Number(_isValidMont(mQuery) ? mQuery : dayjs().format('M'));
 
-  // month가 없다면 default로 현재 월
-  const year = Number(isValidYear(yQuery ?? '') ? yQuery : dayjs().format('YYYY'));
-  const month = Number(isValidMont(mQuery ?? '') ? mQuery : dayjs().format('M'));
+    handleYear(year);
+    handleMonth(month);
+
+    // 유효한 year인지 확인
+    function _isValidYear(y: string) {
+      const year = Number(y);
+      return year > 0 && year < 10000;
+    }
+
+    // 유효한 month인지 확인
+    function _isValidMont(m: string) {
+      const month = Number(m);
+      return month > 0 && month < 13;
+    }
+  }, [yQuery, mQuery]);
 
   /** 월급날 정보 X  => modal open */
   useEffect(() => {
@@ -47,10 +57,9 @@ const Home = () => {
 
   return (
     <div>
-      <Header year={year} month={month} />
-      <ResultBox year={year} month={month} />
-      <Calendar year={year} month={month} />
-
+      <Header />
+      <ResultBox />
+      {day ? <FormBox /> : <Calendar />}
       <SalaryModal openModal={openModal} ref={modalRef} handleModalClose={handleModalClose} />
     </div>
   );
