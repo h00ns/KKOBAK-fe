@@ -7,6 +7,7 @@ export interface GetRecordResponse {
   income: number;
   outcome: number;
   balance: number;
+  list: RecordItem[];
 }
 
 export interface CreateRecordPayload {
@@ -25,13 +26,15 @@ export interface GetRecordDetailPayload {
 }
 
 export interface GetRecordDetailResponse {
-  list: {
-    id: number;
-    title: string;
-    value: number;
-    type: 'income' | 'outcome';
-    year: number;
-    month: number;
-    day: number;
-  }[];
+  list: RecordItem[];
+}
+
+export interface RecordItem {
+  id: number;
+  title: string;
+  value: number;
+  type: 'income' | 'outcome';
+  year: number;
+  month: number;
+  day: number;
 }
