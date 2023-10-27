@@ -16,14 +16,16 @@ export const result_item = style([
   {
     fontSize: 14,
     padding: '4px 6px',
-    selectors: {
-      '&:nth-child(1)': {
-        borderBottom: `1px solid ${gray.gray2}`,
-      },
-      '&:nth-child(2)': {
-        borderBottom: `1px solid ${gray.gray2}`,
-      },
-    },
+    borderBottom: `1px solid ${gray.gray2}`,
+
+    // selectors: {
+    //   '&:nth-child(1)': {
+    //     borderBottom: `1px solid ${gray.gray2}`,
+    //   },
+    //   '&:nth-child(2)': {
+    //     borderBottom: `1px solid ${gray.gray2}`,
+    //   },
+    // },
   },
 ]);
 
