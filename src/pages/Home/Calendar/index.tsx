@@ -49,7 +49,7 @@ export default function Calendar() {
         ))}
       </div>
       <div className={calendar_row}>
-        {calendarList.map((day, idx) => (
+        {calendarList?.map((day, idx) => (
           <CalendarItem
             value={day}
             isCurrentCalendar={isCurrentCalendar}

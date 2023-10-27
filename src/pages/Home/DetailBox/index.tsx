@@ -22,7 +22,7 @@ export default function DetailBox({ setHomeTypeForm }: Props) {
             </Typography>
             <Typography
               variant={TypoVariant.B3}
-              color={{ income: red.red2, outcome: green.green3 }[item.type]}>
+              color={{ income: green.green3, outcome: red.red2 }[item.type]}>
               {item.value.toLocaleString()}원
             </Typography>
           </div>
