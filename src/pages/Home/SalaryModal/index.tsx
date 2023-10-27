@@ -14,6 +14,7 @@ type Props = {
 const SalaryModal = ({ openModal, handleModalClose }: Props, ref: ForwardedRef<HTMLDivElement>) => {
   const queryClient = useQueryClient();
   const user = queryClient.getQueryData<GetUserInfoResponse>(['user']);
+
   const [salaryDay, setSalaryDay] = useState(0);
 
   const { patchSalaryDayMutate } = usePatchSalaryDayFetch();

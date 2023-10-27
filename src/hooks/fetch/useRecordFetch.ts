@@ -1,6 +1,10 @@
-import { getRecordApi } from '@/apis/record';
-import { GetRecordPayload } from './../../apis/record/types';
-import { useQuery } from '@tanstack/react-query';
+import { createRecordApi, getRecordApi, getRecordDetailApi } from '@/apis/record';
+import {
+  CreateRecordPayload,
+  GetRecordDetailPayload,
+  GetRecordPayload,
+} from './../../apis/record/types';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { ApiError } from '@/apis/types';
 
 /**
@@ -32,4 +36,55 @@ export const useGetRecordFetch = ({ year, month }: GetRecordPayload) => {
   return {
     recordData,
   };
+};
+
+/**
+ *  record 생성 Fetch
+ *  @function useCreateRecordFetch
+ *  @param {string} title - 내용
+ *  @param {number} value - 금액
+ *  @param {'income' | 'outcome'} type - 수입/지출
+ *  @param {number} year - 년도
+ *  @param {number} month - 월
+ *  @param {number} day - 일
+ */
+export const useCreateRecordFetch = () => {
+  const { mutate: createRecordMutate } = useMutation(
+    ['createRecord'],
+    ({ title, value, type, year, month, day }: CreateRecordPayload) =>
+      createRecordApi({ title, value, type, year, month, day }),
+    {
+      onError: (error: ApiError) => {
+        alert(error.message);
+      },
+    },
+  );
+
+  return {
+    createRecordMutate,
+  };
+};
+
+/**
+ *  해당 일의 record 목록 조회 Fetch
+ *  @function useGetRecordDetailFetch
+ *  @param {number} year - 년도
+ *  @param {number} month - 월
+ *  @param {number} day - 일
+ */
+export const useGetRecordDtailFetch = ({ year, month, day }: GetRecordDetailPayload) => {
+  const { data: recordDetailData } = useQuery(
+    ['getRecordDetail', year, month, day],
+    async () => {
+      const result = await getRecordDetailApi({ year, month, day });
+      return result.data.result;
+    },
+    {
+      onError: (error: ApiError) => {
+        alert(error.message);
+      },
+    },
+  );
+
+  return { recordDetailData };
 };

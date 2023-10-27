@@ -1,6 +1,6 @@
 import { style } from '@vanilla-extract/css';
 import { recipe } from '@vanilla-extract/recipes';
-import { black, blue, gray, red, white } from 'hoon-ds';
+import { black, blue, gray, green, red, white } from 'hoon-ds';
 
 export const calendar_row = style({
   textAlign: 'center',
@@ -44,6 +44,22 @@ export const calendar_item = recipe({
         cursor: 'pointer',
         ':hover': {
           background: gray.gray1,
+        },
+      },
+    },
+    isToday: {
+      true: {
+        background: green.green1,
+        ':hover': {
+          background: green.green1,
+        },
+      },
+    },
+    isSelect: {
+      true: {
+        background: blue.blue1,
+        ':hover': {
+          background: blue.blue1,
         },
       },
     },

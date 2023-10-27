@@ -2,23 +2,31 @@ import { useState } from 'react';
 import { button_wrap, form_box, icon_wrap } from './index.css';
 import { Button, ButtonVariant, Icon, Input, gray } from 'hoon-ds';
 import LabelInput from '@/components/blocks/LabelInput';
-import { useDateActions, useDateState } from '@/store/date';
+import { useDateState } from '@/store/date';
 import { flx_end } from '@/style/display.css';
 import { returnOnlyNumber } from '@/utils/regex';
+import { useCreateRecordFetch } from '@/hooks/fetch/useRecordFetch';
+import { useQueryClient } from '@tanstack/react-query';
+
+type Props = {
+  setHomeTypeCalendar: () => void;
+};
 
 type FormTypes = {
   title: string;
   value: number;
 };
 
-export default function FormBox() {
+export default function FormBox({ setHomeTypeCalendar }: Props) {
+  const queryClient = useQueryClient();
   const { year, month, day } = useDateState();
-  const { handleDay } = useDateActions();
 
   const [form, setForm] = useState<FormTypes>({
     title: '',
     value: 0,
   });
+
+  const { createRecordMutate } = useCreateRecordFetch();
 
   /**
    *  금액 변경 핸들링
@@ -32,19 +40,21 @@ export default function FormBox() {
    *  가계부 작성 제출
    */
   const handleFormSubmit = (type: 'income' | 'outcome') => {
-    console.log({
-      year,
-      month,
-      day,
-      type,
-      ...form,
-    });
+    createRecordMutate(
+      { ...form, type, year, month, day },
+      {
+        onSuccess: () => {
+          queryClient.invalidateQueries(['getRecord']);
+          setHomeTypeCalendar();
+        },
+      },
+    );
   };
 
   return (
     <div className={form_box}>
       <div className={flx_end}>
-        <div className={icon_wrap} onClick={() => handleDay(0)}>
+        <div className={icon_wrap} onClick={setHomeTypeCalendar}>
           <Icon name="close" size={'16px'} />
         </div>
       </div>
@@ -60,7 +70,7 @@ export default function FormBox() {
       <LabelInput title="금액" color={gray.gray6}>
         <Input
           name="value"
-          value={form.value ? form.value : ''}
+          value={form.value ? form.value.toLocaleString() : ''}
           placeholder="금액을 입력해주세요."
           onChange={handleValueChange}
         />

@@ -38,3 +38,8 @@ export const mb_4 = style({
 export const mb_5 = style({
   marginBottom: 40,
 });
+
+// margin right
+export const mr_1 = style({
+  marginRight: 8,
+});

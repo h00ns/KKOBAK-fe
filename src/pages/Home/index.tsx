@@ -4,13 +4,14 @@ import ResultBox from './ResultBox';
 import { withAuth } from '@/components/hocs/withAuth';
 import { useModal } from '@/hooks/util/useModal';
 import SalaryModal from './SalaryModal';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 import { GetUserInfoResponse } from '@/apis/user/types';
 import { useSearchParams } from 'react-router-dom';
 import dayjs from 'dayjs';
 import FormBox from './FormBox';
 import { useDateActions, useDayState } from '@/store/date';
+import DetailBox from './DetailBox';
 
 const Home = () => {
   const queryClient = useQueryClient();
@@ -24,6 +25,8 @@ const Home = () => {
 
   const { day } = useDayState();
   const { handleYear, handleMonth } = useDateActions();
+
+  const [homeType, setHomeType] = useState<'calendar' | 'form'>('calendar');
 
   useEffect(() => {
     // month가 없다면 default로 현재 월
@@ -59,7 +62,14 @@ const Home = () => {
     <div>
       <Header />
       <ResultBox />
-      {day ? <FormBox /> : <Calendar />}
+      {homeType === 'calendar' ? (
+        <>
+          <Calendar />
+          {!!day && <DetailBox setHomeTypeForm={() => setHomeType('form')} />}
+        </>
+      ) : (
+        <FormBox setHomeTypeCalendar={() => setHomeType('calendar')} />
+      )}
       <SalaryModal openModal={openModal} ref={modalRef} handleModalClose={handleModalClose} />
     </div>
   );
