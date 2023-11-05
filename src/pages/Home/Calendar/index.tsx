@@ -1,14 +1,17 @@
 import { useMemo } from 'react';
-import { calendar_header, calendar_item, calendar_row } from './index.css';
-import { useDateActions, useDateState } from '@/store/date';
+import { calendar_header, calendar_row } from './index.css';
+import { useYearMonthState } from '@/store/date';
+import { useGetRecordFetch } from '@/hooks/fetch/useRecordFetch';
+import CalendarItem from './CalendarItem';
 
 export default function Calendar() {
-  const { year, month, day } = useDateState();
-  const { handleDay } = useDateActions();
+  const { year, month } = useYearMonthState();
+
+  const { recordData } = useGetRecordFetch({ year, month });
+  const { list: recordList } = recordData ?? {};
 
   const currentYear = new Date().getFullYear();
   const currentMonth = new Date().getMonth() + 1;
-  const currentDay = new Date().getDate();
 
   // 이번달 캘린더인지 확인
   const isCurrentCalendar = currentYear === year && currentMonth === month;
@@ -38,15 +41,6 @@ export default function Calendar() {
     return result;
   }, [year, month]);
 
-  /**
-   *  캘린더 날짜 클릭
-   */
-  const handleDayClick = (day: '' | number) => {
-    if (!day) return;
-
-    handleDay(day);
-  };
-
   return (
     <div>
       <div className={calendar_header}>
@@ -55,17 +49,13 @@ export default function Calendar() {
         ))}
       </div>
       <div className={calendar_row}>
-        {calendarList.map((item, idx) => (
-          <div
-            className={calendar_item({
-              isDay: !!item,
-              isToday: isCurrentCalendar && item === currentDay,
-              isSelect: item === day,
-            })}
-            onClick={() => handleDayClick(item)}
-            key={idx}>
-            {item || ''}
-          </div>
+        {calendarList?.map((day, idx) => (
+          <CalendarItem
+            value={day}
+            isCurrentCalendar={isCurrentCalendar}
+            data={recordList?.filter((item) => item.day === day)}
+            key={idx}
+          />
         ))}
       </div>
     </div>
