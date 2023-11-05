@@ -8,6 +8,7 @@ const API = axios.create({
   },
 });
 
+// 토큰이 필요없는 요청
 const isCancelToken = (url: string): boolean => {
   if (url === 'https://kapi.kakao.com/v2/user/me') {
     return true;

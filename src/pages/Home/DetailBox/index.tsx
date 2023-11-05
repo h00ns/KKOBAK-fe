@@ -1,7 +1,8 @@
-import { Icon, TypoVariant, Typography, gray, green, red, white } from 'hoon-ds';
-import { detail_box, detail_item, detail_list, plus_btn, plus_btn_wrap } from './index.css';
+import { Icon, white } from 'hoon-ds';
+import { detail_box, detail_list, plus_btn, plus_btn_wrap } from './index.css';
 import { useDateState } from '@/store/date';
 import { useGetRecordDtailFetch } from '@/hooks/fetch/useRecordFetch';
+import DetailItem from './DetailItem';
 
 type Props = {
   setHomeTypeForm: () => void;
@@ -15,18 +16,7 @@ export default function DetailBox({ setHomeTypeForm }: Props) {
   return (
     <div className={detail_box}>
       <div className={detail_list}>
-        {recordDetailData?.list.map((item) => (
-          <div className={detail_item} key={item.id}>
-            <Typography variant={TypoVariant.B3} color={gray.gray6}>
-              {item.title}
-            </Typography>
-            <Typography
-              variant={TypoVariant.B3}
-              color={{ income: green.green3, outcome: red.red2 }[item.type]}>
-              {item.value.toLocaleString()}원
-            </Typography>
-          </div>
-        ))}
+        {recordDetailData?.list.map((item) => <DetailItem data={item} key={item.id} />)}
       </div>
 
       <div className={plus_btn_wrap}>

@@ -32,6 +32,7 @@ export const getRecordApi = ({
  *  @param {number} year - 년도
  *  @param {number} month - 월
  *  @param {number} day - 일
+ *  @param {numbe} code - filter code
  */
 export const createRecordApi = ({
   title,
@@ -40,8 +41,9 @@ export const createRecordApi = ({
   year,
   month,
   day,
+  code,
 }: CreateRecordPayload): Promise<AxiosResponse<ApiResponse<null>, ApiError>> => {
-  return API.post(`/record`, { title, value, type, year, month, day });
+  return API.post(`/record`, { title, value, type, year, month, day, code });
 };
 
 /**

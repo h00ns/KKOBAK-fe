@@ -50,6 +50,18 @@ export const flx_c_gap_1 = style([
     columnGap: '8px',
   },
 ]);
+export const flx_c_gap_2 = style([
+  flx,
+  {
+    columnGap: '16px',
+  },
+]);
+export const flx_c_gap_3 = style([
+  flx,
+  {
+    columnGap: '24px',
+  },
+]);
 
 export const grid = style({
   display: 'grid',

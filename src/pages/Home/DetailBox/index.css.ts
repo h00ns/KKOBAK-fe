@@ -1,4 +1,4 @@
-import { flx_between, flx_center, flx_end } from '@/style/display.css';
+import { flx_center, flx_end } from '@/style/display.css';
 import { mr_1 } from '@/style/margin.css';
 import { style } from '@vanilla-extract/css';
 import { Radius, gray, primary, white } from 'hoon-ds';
@@ -12,13 +12,6 @@ export const detail_list = style({
   height: 250,
   overflowY: 'scroll',
 });
-
-export const detail_item = style([
-  flx_between,
-  {
-    padding: '12px 8px',
-  },
-]);
 
 export const plus_btn_wrap = style([
   flx_end,

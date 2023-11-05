@@ -1,5 +1,9 @@
 import { create } from 'zustand';
 
+/**
+ *  상태관리 라이브러리 Zustand 사용
+ */
+
 type State = {
   year: number;
   month: number;

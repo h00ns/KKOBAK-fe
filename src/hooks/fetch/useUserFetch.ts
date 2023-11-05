@@ -14,6 +14,7 @@ import {
   SendResetCodePayload,
   SignUpPayload,
 } from '@/apis/user/types';
+import { Toast } from '@/utils/toast';
 import { useMutation } from '@tanstack/react-query';
 
 /**
@@ -27,7 +28,7 @@ export const useCheckEmailFetch = () => {
     ({ email }: CheckEmailPayload) => checkEmailApi({ email }),
     {
       onError: (error: ApiError) => {
-        alert(error.message);
+        Toast.error(error.message);
       },
     },
   );
@@ -50,7 +51,7 @@ export const useSignUpFetch = () => {
     ({ email, name, password }: SignUpPayload) => signUpApi({ email, name, password }),
     {
       onError: (error: ApiError) => {
-        alert(error.message);
+        Toast.error(error.message);
       },
     },
   );
@@ -71,7 +72,7 @@ export const useSendResetCodeFetch = () => {
     ({ email }: SendResetCodePayload) => sendResetCodeApi({ email }),
     {
       onError: (error: ApiError) => {
-        alert(error.message);
+        Toast.error(error.message);
       },
     },
   );
@@ -95,7 +96,7 @@ export const usePatchPasswordFetch = () => {
       patchPasswordApi({ email, password, resetCode }),
     {
       onError: (error: ApiError) => {
-        alert(error.message);
+        Toast.error(error.message);
       },
     },
   );
@@ -112,7 +113,7 @@ export const usePatchPasswordFetch = () => {
 export const useGetUserInfoFetch = () => {
   const { mutate: getUserInfoMutate } = useMutation(['getUserInfo'], () => getUserInfoApi(), {
     onError: (error: ApiError) => {
-      alert(error.message);
+      Toast.error(error.message);
     },
   });
 
@@ -132,7 +133,7 @@ export const usePatchSalaryDayFetch = () => {
     ({ salaryDay }: PatchSalaryDayPayload) => patchSalaryDayApi({ salaryDay }),
     {
       onError: (error: ApiError) => {
-        alert(error.message);
+        Toast.error(error.message);
       },
     },
   );
