@@ -41,7 +41,7 @@ export default function FormBox({ setHomeTypeCalendar }: Props) {
    */
   const handleFormSubmit = (type: 'income' | 'outcome') => {
     createRecordMutate(
-      { ...form, type, year, month, day },
+      { ...form, type, year, month, day, code: 101 },
       {
         onSuccess: () => {
           queryClient.invalidateQueries(['getRecord']);

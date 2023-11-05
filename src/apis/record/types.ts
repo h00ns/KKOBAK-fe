@@ -17,6 +17,7 @@ export interface CreateRecordPayload {
   year: number;
   month: number;
   day: number;
+  code: number;
 }
 
 export interface GetRecordDetailPayload {

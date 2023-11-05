@@ -52,8 +52,8 @@ export const useGetRecordFetch = ({ year, month }: GetRecordPayload) => {
 export const useCreateRecordFetch = () => {
   const { mutate: createRecordMutate } = useMutation(
     ['createRecord'],
-    ({ title, value, type, year, month, day }: CreateRecordPayload) =>
-      createRecordApi({ title, value, type, year, month, day }),
+    ({ title, value, type, year, month, day, code }: CreateRecordPayload) =>
+      createRecordApi({ title, value, type, year, month, day, code }),
     {
       onError: (error: ApiError) => {
         Toast.error(error.message);
