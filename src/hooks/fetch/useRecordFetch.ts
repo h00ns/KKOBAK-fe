@@ -6,6 +6,7 @@ import {
 } from './../../apis/record/types';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { ApiError } from '@/apis/types';
+import { Toast } from '@/utils/toast';
 
 /**
  *  해당 달의 통계 가져오기 Fetch
@@ -28,7 +29,7 @@ export const useGetRecordFetch = ({ year, month }: GetRecordPayload) => {
     {
       keepPreviousData: true,
       onError: (error: ApiError) => {
-        alert(error.message);
+        Toast.error(error.message);
       },
     },
   );
@@ -55,7 +56,7 @@ export const useCreateRecordFetch = () => {
       createRecordApi({ title, value, type, year, month, day }),
     {
       onError: (error: ApiError) => {
-        alert(error.message);
+        Toast.error(error.message);
       },
     },
   );
@@ -81,7 +82,7 @@ export const useGetRecordDtailFetch = ({ year, month, day }: GetRecordDetailPayl
     },
     {
       onError: (error: ApiError) => {
-        alert(error.message);
+        Toast.error(error.message);
       },
     },
   );

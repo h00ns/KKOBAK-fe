@@ -2,6 +2,7 @@ import { getKakaoTokenApi, getKakaoUserInfoApi, loginApi, verifyKakaoLoginApi } 
 import { GetKakaoTokenPayload, LoginPayload } from '@/apis/auth/types';
 import { ApiError } from '@/apis/types';
 import { HOME } from '@/constants/routes/routes';
+import { Toast } from '@/utils/toast';
 import { useMutation } from '@tanstack/react-query';
 
 /**
@@ -26,7 +27,7 @@ export const useLoginFetch = () => {
         localStorage.setItem('refreshToken', refreshToken);
       },
       onError: (error: ApiError) => {
-        alert(error.message);
+        Toast.error(error.message);
       },
     },
   );
