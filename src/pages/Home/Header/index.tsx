@@ -24,10 +24,16 @@ export default function Header() {
     navigate(`?y=${nextYear}&m=${nextMonth}`);
   };
 
+  const handleLogout = () => {
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('refreshToken');
+    navigate('/');
+  };
+
   return (
     <div className={`${header}`}>
-      <div className={graph_icon}>
-        <Icon name="menu" fill={white} stroke={white} />
+      <div className={graph_icon} onClick={handleLogout}>
+        <Icon name="logout" fill="transparent" stroke={white} />
       </div>
       <div className={icon_wrapper} onClick={handlePrevMonth}>
         <Icon name="chevron-left" stroke={white} />
