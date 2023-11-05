@@ -13,7 +13,7 @@ export interface GetRecordResponse {
 export interface CreateRecordPayload {
   title: string;
   value: number;
-  type: 'income' | 'outcome';
+  type: 'income' | 'outcome' | null;
   year: number;
   month: number;
   day: number;
@@ -38,4 +38,9 @@ export interface RecordItem {
   year: number;
   month: number;
   day: number;
+  filter: {
+    id: number;
+    code: number;
+    name: string;
+  };
 }

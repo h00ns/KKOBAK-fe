@@ -1,41 +1,41 @@
-name: develop
+# name: develop
 
-on:
-  push:
-    branches: [main]
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Git Checkout
-        uses: actions/checkout@v3
+# on:
+#   push:
+#     branches: [main]
+# jobs:
+#   build:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Git Checkout
+#         uses: actions/checkout@v3
 
-      - name: Install Dependencies
-        run: yarn install --frozen-lockfile
+#       - name: Install Dependencies
+#         run: yarn install --frozen-lockfile
 
-      - name: Build
-        env:
-          VITE_APP_MODE: prod
-          VITE_BASE_URL: https://hoons.store
-        run: yarn build
+#       - name: Build
+#         env:
+#           VITE_APP_MODE: prod
+#           VITE_BASE_URL: https://hoons.store
+#         run: yarn build
 
-      - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ secrets.AWS_REGION }}
+#       - name: Configure AWS Credentials
+#         uses: aws-actions/configure-aws-credentials@v1
+#         with:
+#           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
+#           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+#           aws-region: ${{ secrets.AWS_REGION }}
 
-      - name: Deploy to S3
-        env:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        run: |
-          aws s3 rm s3://kkobak-fe --recursive
-          aws s3 cp --recursive --region ap-northeast-2 ./dist s3://kkobak-fe
+#       - name: Deploy to S3
+#         env:
+#           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
+#           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+#         run: |
+#           aws s3 rm s3://kkobak-fe --recursive
+#           aws s3 cp --recursive --region ap-northeast-2 ./dist s3://kkobak-fe
 
-      - name: Clear Cache to Cloudfront
-        env:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        run: aws cloudfront create-invalidation --distribution-id E1XJYK8IC509BZ --paths "/*"
+#       - name: Clear Cache to Cloudfront
+#         env:
+#           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
+#           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+#         run: aws cloudfront create-invalidation --distribution-id E1XJYK8IC509BZ --paths "/*"
