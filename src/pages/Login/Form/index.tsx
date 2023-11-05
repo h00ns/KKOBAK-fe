@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import { HOME, KAKAO_AUTH_URL, RESET, SIGN_UP } from '@/constants/routes/routes';
 import { useLoginFetch } from '@/hooks/fetch/useAuthFetch';
 import KakaoImg from '@/assets/images/kakao.png';
+import { Toast } from '@/utils/toast';
 
 type LoginFormType = {
   email: string;
@@ -41,6 +42,7 @@ export default function Form() {
       {
         onSuccess: () => {
           navigate(HOME);
+          Toast.success('로그인 되었습니다.');
         },
       },
     );

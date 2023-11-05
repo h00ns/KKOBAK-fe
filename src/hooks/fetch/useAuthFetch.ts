@@ -65,6 +65,7 @@ export const useKakaoLoginFetch = () => {
         localStorage.setItem('refreshToken', refreshToken);
 
         window.location.href = HOME;
+        Toast.success('로그인 되었습니다.');
       },
     },
   );

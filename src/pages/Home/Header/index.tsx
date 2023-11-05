@@ -2,6 +2,7 @@ import { Icon, white } from 'hoon-ds';
 import { date_text, graph_icon, header, icon_wrapper } from './index.css';
 import { useNavigate } from 'react-router-dom';
 import { useYearMonthState } from '@/store/date';
+import { Toast } from '@/utils/toast';
 
 export default function Header() {
   const navigate = useNavigate();
@@ -28,6 +29,7 @@ export default function Header() {
     localStorage.removeItem('accessToken');
     localStorage.removeItem('refreshToken');
     navigate('/');
+    Toast.success('로그아웃 되었습니다.');
   };
 
   return (

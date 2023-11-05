@@ -7,6 +7,7 @@ import { Button, ButtonVariant, Input, InputVariant } from 'hoon-ds';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { signUp_form } from './index.css';
+import { Toast } from '@/utils/toast';
 
 type SignUpFormType = {
   email: string;
@@ -49,6 +50,7 @@ export default function Form() {
       {
         onSuccess: () => {
           setIsEmailVerified(true);
+          Toast.success('사용 가능한 이메일입니다.');
         },
       },
     );
@@ -64,6 +66,7 @@ export default function Form() {
       {
         onSuccess: () => {
           navigate(LOGIN);
+          Toast.success('회원가입 되었습니다');
         },
       },
     );
