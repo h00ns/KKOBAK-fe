@@ -1,29 +1,14 @@
 import { Icon, white } from 'hoon-ds';
 import { date_text, graph_icon, header, icon_wrapper } from './index.css';
 import { useNavigate } from 'react-router-dom';
-import { useYearMonthState } from '@/store/date';
+import { useDateActions, useYearMonthState } from '@/store/date';
 import { Toast } from '@/utils/toast';
 
 export default function Header() {
   const navigate = useNavigate();
 
   const { year, month } = useYearMonthState();
-
-  // 이전 달로 이동
-  const handlePrevMonth = () => {
-    const prevMonth = month === 1 ? 12 : month - 1;
-    const prevYear = month === 1 ? year - 1 : year;
-
-    navigate(`?y=${prevYear}&m=${prevMonth}`);
-  };
-
-  // 다음 달로 이동
-  const handleNextMonth = () => {
-    const nextMonth = month === 12 ? 1 : month + 1;
-    const nextYear = month === 12 ? year + 1 : year;
-
-    navigate(`?y=${nextYear}&m=${nextMonth}`);
-  };
+  const { handlePrevMonth, handleNextMonth } = useDateActions();
 
   const handleLogout = () => {
     localStorage.removeItem('accessToken');

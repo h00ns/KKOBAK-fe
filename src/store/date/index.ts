@@ -12,24 +12,40 @@ type State = {
 
 type Actions = {
   actions: {
-    handleYear: (year: number) => void;
-    handleMonth: (month: number) => void;
-    handleDay: (day: number) => void;
+    handlePrevMonth: () => void;
+    handleNextMonth: () => void;
+    setDay: (day: number) => void;
   };
 };
 
 const initialState: State = {
-  year: 0,
-  month: 0,
-  day: 0,
+  year: new Date().getFullYear(),
+  month: new Date().getMonth() + 1,
+  day: new Date().getDate(),
 };
 
 const useDateStore = create<State & Actions>((set) => ({
   ...initialState,
   actions: {
-    handleYear: (year) => set({ year }),
-    handleMonth: (month) => set({ month }),
-    handleDay: (day) => set({ day }),
+    handlePrevMonth: () => {
+      set((state) => {
+        const prevMonth = state.month - 1;
+
+        return {
+          month: prevMonth < 1 ? 12 : prevMonth,
+        };
+      });
+    },
+    handleNextMonth: () => {
+      set((state) => {
+        const nextMonth = state.month + 1;
+
+        return {
+          month: nextMonth > 12 ? 1 : nextMonth,
+        };
+      });
+    },
+    setDay: (day) => set({ day }),
   },
 }));
 

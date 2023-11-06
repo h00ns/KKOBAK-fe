@@ -3,6 +3,7 @@ import API from '..';
 import { ApiError, ApiResponse } from '../types';
 import {
   CreateRecordPayload,
+  DeleteRecordPayload,
   GetRecordDetailPayload,
   GetRecordDetailResponse,
   GetRecordPayload,
@@ -63,4 +64,15 @@ export const getRecordDetailApi = ({
   return API.get(`/record/detail`, {
     params: queryFilter({ year, month, day }),
   });
+};
+
+/**
+ *  record 삭제 API
+ *  @function deleteRecordApi
+ *  @param {number} id - record id
+ */
+export const deleteRecordApi = ({
+  id,
+}: DeleteRecordPayload): Promise<AxiosResponse<ApiResponse<null>, ApiError>> => {
+  return API.delete(`/record/${id}`);
 };

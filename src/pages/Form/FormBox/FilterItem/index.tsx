@@ -1,6 +1,6 @@
 import { TypoVariant, Typography, gray } from 'hoon-ds';
 import { filter_icon, filter_item } from './index.css';
-import { FilterCode, useGetFilterProps } from '../../hooks/useGetFilterProps';
+import { FilterCode, useGetFilterProps } from '../../../Home/hooks/useGetFilterProps';
 
 type Props = {
   code: FilterCode;

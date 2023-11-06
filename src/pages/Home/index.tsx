@@ -1,16 +1,12 @@
-import Header from '@/pages/Home/Header';
+import Header from '@/components/blocks/Header';
 import Calendar from './Calendar';
-import ResultBox from './ResultBox';
+import ResultBox from '../../components/blocks/ResultBox';
 import { withAuth } from '@/components/hocs/withAuth';
 import { useModal } from '@/hooks/util/useModal';
 import SalaryModal from './SalaryModal';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 import { GetUserInfoResponse } from '@/apis/user/types';
-import { useSearchParams } from 'react-router-dom';
-import dayjs from 'dayjs';
-import FormBox from './FormBox';
-import { useDateActions, useDayState } from '@/store/date';
 import DetailBox from './DetailBox';
 
 const Home = () => {
@@ -18,36 +14,6 @@ const Home = () => {
   const user = queryClient.getQueryData<GetUserInfoResponse>(['user']);
 
   const { openModal, modalRef, handleModalOpen, handleModalClose } = useModal();
-
-  const [searchParams] = useSearchParams();
-  const yQuery = searchParams.get('y') ?? '';
-  const mQuery = searchParams.get('m') ?? '';
-
-  const { day } = useDayState();
-  const { handleYear, handleMonth } = useDateActions();
-
-  const [homeType, setHomeType] = useState<'calendar' | 'form'>('calendar');
-
-  useEffect(() => {
-    // month가 없다면 default로 현재 월
-    const year = Number(_isValidYear(yQuery) ? yQuery : dayjs().format('YYYY'));
-    const month = Number(_isValidMont(mQuery) ? mQuery : dayjs().format('M'));
-
-    handleYear(year);
-    handleMonth(month);
-
-    // 유효한 year인지 확인
-    function _isValidYear(y: string) {
-      const year = Number(y);
-      return year > 0 && year < 10000;
-    }
-
-    // 유효한 month인지 확인
-    function _isValidMont(m: string) {
-      const month = Number(m);
-      return month > 0 && month < 13;
-    }
-  }, [yQuery, mQuery]);
 
   /** 월급날 정보 X  => modal open */
   useEffect(() => {
@@ -62,15 +28,13 @@ const Home = () => {
     <div>
       <Header />
       <ResultBox />
-      {homeType === 'calendar' ? (
-        <>
-          <Calendar />
-          {!!day && <DetailBox setHomeTypeForm={() => setHomeType('form')} />}
-        </>
-      ) : (
-        <FormBox setHomeTypeCalendar={() => setHomeType('calendar')} />
-      )}
+
+      <Calendar />
+      <DetailBox />
+
+      {/* 월급 입력 modal */}
       <SalaryModal openModal={openModal} ref={modalRef} handleModalClose={handleModalClose} />
+      {/* 월급 입력 modal end */}
     </div>
   );
 };
