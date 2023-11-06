@@ -6,7 +6,7 @@ export const detail_item = style([
   flx_c_gap_1,
   {
     alignItems: 'center',
-    padding: '4px 8px',
+    padding: '6px 8px',
   },
 ]);
 
@@ -18,3 +18,11 @@ export const filter_icon = style([
     borderRadius: Radius.MAXIMUM,
   },
 ]);
+
+export const icon_wrap = style({
+  cursor: 'pointer',
+
+  ':hover': {
+    opacity: 0.5,
+  },
+});
