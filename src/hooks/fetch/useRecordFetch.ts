@@ -1,6 +1,7 @@
-import { createRecordApi, getRecordApi, getRecordDetailApi } from '@/apis/record';
+import { createRecordApi, deleteRecordApi, getRecordApi, getRecordDetailApi } from '@/apis/record';
 import {
   CreateRecordPayload,
+  DeleteRecordPayload,
   GetRecordDetailPayload,
   GetRecordPayload,
 } from './../../apis/record/types';
@@ -13,16 +14,12 @@ import { Toast } from '@/utils/toast';
  *  @function useGetRecordFetch
  */
 export const useGetRecordFetch = ({ year, month }: GetRecordPayload) => {
-  // default 값은 현재 년도, 현재 월 (year, month가 없을경우 ''로 받음)
-  const currentYear = new Date().getFullYear();
-  const currentMonth = new Date().getMonth() + 1;
-
   const { data: recordData } = useQuery(
-    ['getRecord', year || currentYear, month || currentMonth],
+    ['getRecord', year, month],
     async () => {
       const result = await getRecordApi({
-        year: year || currentYear,
-        month: month || currentMonth,
+        year,
+        month,
       });
       return result.data.result;
     },
@@ -88,4 +85,25 @@ export const useGetRecordDtailFetch = ({ year, month, day }: GetRecordDetailPayl
   );
 
   return { recordDetailData };
+};
+
+/**
+ *  record 삭제 Fetch
+ *  @function useDeleteRecordFetch
+ *  @param {number} id - record id
+ */
+export const useDeleteRecordFetch = () => {
+  const { mutate: deleteRecordMutate } = useMutation(
+    ['deleteRecord'],
+    ({ id }: DeleteRecordPayload) => deleteRecordApi({ id }),
+    {
+      onError: (error: ApiError) => {
+        Toast.error(error.message);
+      },
+    },
+  );
+
+  return {
+    deleteRecordMutate,
+  };
 };

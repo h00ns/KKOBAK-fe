@@ -44,3 +44,7 @@ export interface RecordItem {
     name: string;
   };
 }
+
+export interface DeleteRecordPayload {
+  id: number;
+}
