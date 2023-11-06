@@ -3,12 +3,11 @@ import { detail_box, detail_list, plus_btn, plus_btn_wrap } from './index.css';
 import { useDateState } from '@/store/date';
 import { useGetRecordDtailFetch } from '@/hooks/fetch/useRecordFetch';
 import DetailItem from './DetailItem';
+import { useNavigate } from 'react-router-dom';
+import { FORM } from '@/constants/routes/routes';
 
-type Props = {
-  setHomeTypeForm: () => void;
-};
-
-export default function DetailBox({ setHomeTypeForm }: Props) {
+export default function DetailBox() {
+  const navigate = useNavigate();
   const { year, month, day } = useDateState();
 
   const { recordDetailData } = useGetRecordDtailFetch({ year, month, day });
@@ -20,7 +19,7 @@ export default function DetailBox({ setHomeTypeForm }: Props) {
       </div>
 
       <div className={plus_btn_wrap}>
-        <div className={plus_btn} onClick={setHomeTypeForm}>
+        <div className={plus_btn} onClick={() => navigate(FORM)}>
           <Icon name="plus" stroke={white} size="18px" />
         </div>
       </div>

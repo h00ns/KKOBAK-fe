@@ -9,11 +9,8 @@ import { useCreateRecordFetch } from '@/hooks/fetch/useRecordFetch';
 import { useQueryClient } from '@tanstack/react-query';
 import { Toast } from '@/utils/toast';
 import FilterItem from './FilterItem';
-import { FilterCode } from '../hooks/useGetFilterProps';
-
-type Props = {
-  setHomeTypeCalendar: () => void;
-};
+import { FilterCode } from '../../Home/hooks/useGetFilterProps';
+import { useNavigate } from 'react-router-dom';
 
 type FormTypes = {
   title: string;
@@ -21,7 +18,9 @@ type FormTypes = {
   type: 'income' | 'outcome' | null;
 };
 
-export default function FormBox({ setHomeTypeCalendar }: Props) {
+export default function FormBox() {
+  const navigate = useNavigate();
+
   const queryClient = useQueryClient();
   const { year, month, day } = useDateState();
 
@@ -64,7 +63,7 @@ export default function FormBox({ setHomeTypeCalendar }: Props) {
       {
         onSuccess: () => {
           queryClient.invalidateQueries(['getRecord']);
-          setHomeTypeCalendar();
+          navigate(-1);
         },
       },
     );
@@ -73,7 +72,7 @@ export default function FormBox({ setHomeTypeCalendar }: Props) {
   return (
     <div className={form_box}>
       <div className={flx_end}>
-        <div className={icon_wrap} onClick={setHomeTypeCalendar}>
+        <div className={icon_wrap} onClick={() => navigate(-1)}>
           <Icon name="close" size={'16px'} />
         </div>
       </div>

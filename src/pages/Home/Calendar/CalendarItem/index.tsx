@@ -10,7 +10,7 @@ type Props = {
 
 export default function CalendarItem({ value, isCurrentCalendar, data }: Props) {
   const { day } = useDayState();
-  const { handleDay } = useDateActions();
+  const { setDay } = useDateActions();
 
   const currentDay = new Date().getDate();
 
@@ -28,7 +28,7 @@ export default function CalendarItem({ value, isCurrentCalendar, data }: Props) 
   const handleDayClick = (day: '' | number) => {
     if (!day) return;
 
-    handleDay(day);
+    setDay(day);
   };
 
   return (
