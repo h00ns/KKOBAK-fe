@@ -41,9 +41,9 @@ export default function FormBox() {
   };
 
   /**
-   *  가계부 타입 변경
+   *  가계부 타입 선택
    */
-  const handleType = (type: 'income' | 'outcome') => {
+  const handleSetType = (type: 'income' | 'outcome') => {
     if (!form.title || !form.value) {
       Toast.error('내용과 금액을 입력해주세요.');
       return;
@@ -98,8 +98,12 @@ export default function FormBox() {
           </LabelInput>
 
           <div className={button_wrap}>
-            <Button text="지출" variant={ButtonVariant.RED} onClick={() => handleType('outcome')} />
-            <Button text="입금" onClick={() => handleType('income')} />
+            <Button
+              text="지출"
+              variant={ButtonVariant.RED}
+              onClick={() => handleSetType('outcome')}
+            />
+            <Button text="입금" onClick={() => handleSetType('income')} />
           </div>
         </>
       )}

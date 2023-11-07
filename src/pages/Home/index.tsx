@@ -26,7 +26,7 @@ const Home = () => {
 
   return (
     <div>
-      <Header />
+      <Header pageType="home" />
       <ResultBox />
 
       <Calendar />

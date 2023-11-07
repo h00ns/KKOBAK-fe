@@ -1,27 +1,14 @@
-import { Radius, blue } from 'hoon-ds';
-import { flx_center } from '@/style/display.css';
+import { flx_center, flx_r_gap_1 } from '@/style/display.css';
 import { text_center } from '@/style/text.css';
 import { style } from '@vanilla-extract/css';
+import { Radius, blue } from 'hoon-ds';
 
 export const header = style([
   flx_center,
   {
     padding: '16px 0',
-    columnGap: 8,
 
     position: 'relative',
-  },
-]);
-
-export const date_text = style([
-  text_center,
-  {
-    width: 100,
-    fontSize: 28,
-    lineHeight: '28px',
-
-    position: 'relative',
-    top: 2,
   },
 ]);
 
@@ -35,21 +22,35 @@ export const icon_wrap = style({
   },
 });
 
-export const menu_icon = style([
+export const back_icon = style([
   icon_wrap,
   {
     position: 'absolute',
+    top: 16,
     left: 12,
   },
 ]);
 
-export const profile = style({
-  width: 32,
-  height: 32,
+export const profile = style([
+  flx_r_gap_1,
+  text_center,
+  {
+    alignItems: 'center',
+  },
+]);
+
+export const profile_img_wrap = style({
+  width: 72,
+  height: 72,
   borderRadius: Radius.MAXIMUM,
   background: blue.blue3,
-  cursor: 'pointer',
-
-  position: 'absolute',
-  right: 12,
 });
+
+export const logout_icon = style([
+  icon_wrap,
+  {
+    position: 'absolute',
+    top: 16,
+    right: 12,
+  },
+]);

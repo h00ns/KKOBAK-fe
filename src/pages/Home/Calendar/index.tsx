@@ -1,8 +1,8 @@
-import { useMemo } from 'react';
 import { calendar_header, calendar_row } from './index.css';
 import { useYearMonthState } from '@/store/date';
 import { useGetRecordFetch } from '@/hooks/fetch/useRecordFetch';
 import CalendarItem from './CalendarItem';
+import { useGetCalendarList } from '../hooks/useGetCalendarList';
 
 export default function Calendar() {
   const { year, month } = useYearMonthState();
@@ -17,29 +17,7 @@ export default function Calendar() {
   const isCurrentCalendar = currentYear === year && currentMonth === month;
 
   /** 캘린더 리스트 계산 */
-  const calendarList = useMemo(() => {
-    const firstDay = new Date(`${year}.${month}.1`).getDay();
-
-    const nextFirstDate = new Date(`${year}.${month + 1}.1`);
-    const lastDate = new Date(nextFirstDate.setDate(nextFirstDate.getDate() - 1)).getDate();
-
-    const result: Array<'' | number> = [];
-
-    for (let i = 0; i < 35; i++) {
-      if (i < firstDay) {
-        result.push('');
-      } else {
-        const date = i - firstDay + 1;
-        if (date > lastDate) {
-          result.push('');
-        } else {
-          result.push(date);
-        }
-      }
-    }
-
-    return result;
-  }, [year, month]);
+  const calendarList = useGetCalendarList(year, month);
 
   return (
     <div>
