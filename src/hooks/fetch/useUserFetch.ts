@@ -3,6 +3,7 @@ import {
   checkEmailApi,
   getUserInfoApi,
   patchPasswordApi,
+  patchProfileImgApi,
   patchSalaryDayApi,
   sendResetCodeApi,
   signUpApi,
@@ -10,6 +11,7 @@ import {
 import {
   CheckEmailPayload,
   PatchPasswordPayload,
+  PatchProfileImgPayload,
   PatchSalaryDayPayload,
   SendResetCodePayload,
   SignUpPayload,
@@ -140,5 +142,26 @@ export const usePatchSalaryDayFetch = () => {
 
   return {
     patchSalaryDayMutate,
+  };
+};
+
+/**
+ *  프로필 이미지 변경 Fetch
+ *  @function usePatchProfileImgFetch
+ *  @param {file} profileImg - 프로필 이미지
+ */
+export const usePatchProfileImgFetch = () => {
+  const { mutate: patchProfileImgMutate } = useMutation(
+    ['patchProfileImg'],
+    ({ profileImg }: PatchProfileImgPayload) => patchProfileImgApi({ profileImg }),
+    {
+      onError: (error: ApiError) => {
+        Toast.error(error.message);
+      },
+    },
+  );
+
+  return {
+    patchProfileImgMutate,
   };
 };

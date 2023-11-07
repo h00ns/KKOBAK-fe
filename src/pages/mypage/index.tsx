@@ -1,6 +1,6 @@
 import { withAuth } from '@/components/hocs/withAuth';
 import { Toast } from '@/utils/toast';
-import { Icon, TypoVariant, Typography, white } from 'hoon-ds';
+import { Button, Icon, TypoVariant, Typography, white } from 'hoon-ds';
 import { useNavigate } from 'react-router-dom';
 import { back_icon, header, logout_icon, profile, profile_img_wrap } from './index.css';
 
@@ -31,6 +31,9 @@ const MyPage = () => {
       <div className={logout_icon} onClick={handleLogout}>
         <Icon name="logout" fill="transparent" stroke={white} />
       </div>
+
+      <input type="file" />
+      <Button text="submit" />
     </div>
   );
 };

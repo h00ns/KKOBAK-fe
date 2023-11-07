@@ -33,3 +33,7 @@ export interface GetUserInfoResponse {
 export interface PatchSalaryDayPayload {
   salaryDay: number;
 }
+
+export interface PatchProfileImgPayload {
+  profileImg: File;
+}

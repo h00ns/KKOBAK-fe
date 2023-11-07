@@ -4,6 +4,7 @@ import {
   CheckEmailResponse,
   GetUserInfoResponse,
   PatchPasswordPayload,
+  PatchProfileImgPayload,
   PatchSalaryDayPayload,
   SendResetCodePayload,
   SignUpPayload,
@@ -82,4 +83,15 @@ export const patchSalaryDayApi = ({
   salaryDay,
 }: PatchSalaryDayPayload): Promise<AxiosResponse<ApiResponse<null>, ApiError>> => {
   return API.patch(`/user/salary`, { salaryDay });
+};
+
+/**
+ *  프로필 이미지 변경 API
+ *  @function patchProfileImgApi
+ *  @param {file} profileImg - 프로필 이미지
+ */
+export const patchProfileImgApi = ({
+  profileImg,
+}: PatchProfileImgPayload): Promise<AxiosResponse<ApiResponse<null>, ApiError>> => {
+  return API.patch(`/user/profile`, { profileImg });
 };
