@@ -28,6 +28,7 @@ export interface GetUserInfoResponse {
   name: string;
   salaryDay: number | null;
   createAt: string;
+  profileImg: string | null;
 }
 
 export interface PatchSalaryDayPayload {

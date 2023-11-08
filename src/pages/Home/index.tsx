@@ -5,13 +5,11 @@ import { withAuth } from '@/components/hocs/withAuth';
 import { useModal } from '@/hooks/util/useModal';
 import SalaryModal from './SalaryModal';
 import { useEffect } from 'react';
-import { useQueryClient } from '@tanstack/react-query';
-import { GetUserInfoResponse } from '@/apis/user/types';
 import DetailBox from './DetailBox';
+import { useGetUserInfoFetch } from '@/hooks/fetch/useUserFetch';
 
 const Home = () => {
-  const queryClient = useQueryClient();
-  const user = queryClient.getQueryData<GetUserInfoResponse>(['user']);
+  const { userInfoData: user } = useGetUserInfoFetch();
 
   const { openModal, modalRef, handleModalOpen, handleModalClose } = useModal();
 

@@ -1,14 +1,11 @@
 import { TypoVariant, Typography, gray, green, red } from 'hoon-ds';
 import { result_box, result_item, text_red } from './index.css';
-import { GetUserInfoResponse } from '@/apis/user/types';
-import { useQueryClient } from '@tanstack/react-query';
 import { useGetRecordFetch } from '@/hooks/fetch/useRecordFetch';
 import { useYearMonthState } from '@/store/date';
+import { useGetUserInfoFetch } from '@/hooks/fetch/useUserFetch';
 
 export default function ResultBox() {
-  const queryClient = useQueryClient();
-  const user = queryClient.getQueryData<GetUserInfoResponse>(['user']);
-
+  const { userInfoData: user } = useGetUserInfoFetch();
   const { year, month } = useYearMonthState();
 
   const { recordData } = useGetRecordFetch({ year, month });

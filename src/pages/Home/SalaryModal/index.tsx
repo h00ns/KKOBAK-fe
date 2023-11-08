@@ -2,9 +2,8 @@ import { Button, ButtonVariant, Input, Modal } from 'hoon-ds';
 import { ForwardedRef, forwardRef, useState } from 'react';
 import { button_wrap } from './index.css';
 import { returnOnlyNumber } from '@/utils/regex';
-import { usePatchSalaryDayFetch } from '@/hooks/fetch/useUserFetch';
+import { useGetUserInfoFetch, usePatchSalaryDayFetch } from '@/hooks/fetch/useUserFetch';
 import { useQueryClient } from '@tanstack/react-query';
-import { GetUserInfoResponse } from '@/apis/user/types';
 
 type Props = {
   openModal: boolean;
@@ -13,7 +12,7 @@ type Props = {
 
 const SalaryModal = ({ openModal, handleModalClose }: Props, ref: ForwardedRef<HTMLDivElement>) => {
   const queryClient = useQueryClient();
-  const user = queryClient.getQueryData<GetUserInfoResponse>(['user']);
+  const { userInfoData: user } = useGetUserInfoFetch();
 
   const [salaryDay, setSalaryDay] = useState(0);
 
@@ -45,7 +44,7 @@ const SalaryModal = ({ openModal, handleModalClose }: Props, ref: ForwardedRef<H
       {
         onSuccess: () => {
           if (user) {
-            queryClient.setQueryData<GetUserInfoResponse>(['user'], { ...user, salaryDay });
+            queryClient.invalidateQueries(['user']);
           }
           handleModalClose();
         },

@@ -17,7 +17,7 @@ import {
   SignUpPayload,
 } from '@/apis/user/types';
 import { Toast } from '@/utils/toast';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 
 /**
  *  이메일 중복 체크 Fetch
@@ -109,10 +109,10 @@ export const usePatchPasswordFetch = () => {
 };
 
 /**
- *  자신의 유저 정보 가져오기 Fetch
- *  @function useGetUserInfoFetch
+ *  자신의 유저 정보 mutate로 가져오기 Fetch
+ *  @function useGetMutateUserInfoFetch
  */
-export const useGetUserInfoFetch = () => {
+export const useGetMutateUserInfoFetch = () => {
   const { mutate: getUserInfoMutate } = useMutation(['getUserInfo'], () => getUserInfoApi(), {
     onError: (error: ApiError) => {
       Toast.error(error.message);
@@ -121,6 +121,30 @@ export const useGetUserInfoFetch = () => {
 
   return {
     getUserInfoMutate,
+  };
+};
+
+/**
+ *  자신의 유저 정보 가져오기 Fetch
+ *  @function useGetUserInfoFetch
+ */
+export const useGetUserInfoFetch = () => {
+  const { data: userInfoData } = useQuery(
+    ['getUserInfo'],
+    async () => {
+      const result = await getUserInfoApi();
+
+      return result.data.result;
+    },
+    {
+      onError: (error: ApiError) => {
+        Toast.error(error.message);
+      },
+    },
+  );
+
+  return {
+    userInfoData,
   };
 };
 

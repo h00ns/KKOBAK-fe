@@ -1,7 +1,7 @@
 import { flx_center, flx_r_gap_1 } from '@/style/display.css';
 import { text_center } from '@/style/text.css';
 import { style } from '@vanilla-extract/css';
-import { Radius, blue } from 'hoon-ds';
+import { Radius, white } from 'hoon-ds';
 
 export const header = style([
   flx_center,
@@ -43,8 +43,34 @@ export const profile_img_wrap = style({
   width: 72,
   height: 72,
   borderRadius: Radius.MAXIMUM,
-  background: blue.blue3,
+
+  position: 'relative',
 });
+
+export const profile_img = style({
+  width: '100%',
+  height: '100%',
+  borderRadius: Radius.MAXIMUM,
+});
+
+export const profile_btn = style([
+  flx_center,
+  {
+    width: 16,
+    height: 16,
+    background: white,
+    borderRadius: Radius.MAXIMUM,
+    cursor: 'pointer',
+
+    position: 'absolute',
+    top: 52,
+    right: 2,
+
+    ':hover': {
+      opacity: 0.7,
+    },
+  },
+]);
 
 export const logout_icon = style([
   icon_wrap,
