@@ -93,5 +93,13 @@ export const patchSalaryDayApi = ({
 export const patchProfileImgApi = ({
   profileImg,
 }: PatchProfileImgPayload): Promise<AxiosResponse<ApiResponse<null>, ApiError>> => {
-  return API.patch(`/user/profile`, { profileImg });
+  return API.patch(
+    `/user/profile`,
+    { profileImg },
+    {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    },
+  );
 };

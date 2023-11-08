@@ -46,10 +46,14 @@ export const menu_icon = style([
 export const profile = style({
   width: 32,
   height: 32,
-  borderRadius: Radius.MAXIMUM,
-  background: blue.blue3,
   cursor: 'pointer',
 
   position: 'absolute',
   right: 12,
+});
+
+export const profile_img = style({
+  width: '100%',
+  height: '100%',
+  borderRadius: Radius.MAXIMUM,
 });

@@ -1,8 +1,10 @@
 import { Icon, white } from 'hoon-ds';
-import { date_text, header, icon_wrap, menu_icon, profile } from './index.css';
+import { date_text, header, icon_wrap, menu_icon, profile, profile_img } from './index.css';
 import { useNavigate } from 'react-router-dom';
 import { useDateActions, useYearMonthState } from '@/store/date';
 import { MY_PAGE, STATISTICS } from '@/constants/routes/routes';
+import { useGetUserInfoFetch } from '@/hooks/fetch/useUserFetch';
+import UserImg from '@/assets/images/user.png';
 
 type Props = {
   pageType: 'home' | 'statistics';
@@ -11,6 +13,7 @@ type Props = {
 export default function Header({ pageType }: Props) {
   const navigate = useNavigate();
 
+  const { userInfoData: user } = useGetUserInfoFetch();
   const { year, month } = useYearMonthState();
   const { handlePrevMonth, handleNextMonth } = useDateActions();
 
@@ -41,7 +44,11 @@ export default function Header({ pageType }: Props) {
       <div className={icon_wrap} onClick={handleNextMonth}>
         <Icon name="chevron-right" stroke={white} />
       </div>
-      <div className={profile} onClick={() => navigate(MY_PAGE)}></div>
+      <div className={profile} onClick={() => navigate(MY_PAGE)}>
+        {!!user && (
+          <img className={profile_img} src={user?.profileImg ?? UserImg} alt="profile-img" />
+        )}
+      </div>
     </div>
   );
 }
