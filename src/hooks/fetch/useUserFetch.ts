@@ -109,22 +109,6 @@ export const usePatchPasswordFetch = () => {
 };
 
 /**
- *  자신의 유저 정보 mutate로 가져오기 Fetch
- *  @function useGetMutateUserInfoFetch
- */
-export const useGetMutateUserInfoFetch = () => {
-  const { mutate: getUserInfoMutate } = useMutation(['getUserInfo'], () => getUserInfoApi(), {
-    onError: (error: ApiError) => {
-      Toast.error(error.message);
-    },
-  });
-
-  return {
-    getUserInfoMutate,
-  };
-};
-
-/**
  *  자신의 유저 정보 가져오기 Fetch
  *  @function useGetUserInfoFetch
  */

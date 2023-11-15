@@ -48,22 +48,29 @@ API.interceptors.response.use(
     // 토큰 만료
     if (status === 401) {
       const refreshToken = localStorage.getItem('refreshToken');
+
+      // refresh token 존재
       if (refreshToken) {
-        return await getAccessTokenApi({ refreshToken })
-          .then((res) => {
-            const { accessToken } = res.data.result;
+        try {
+          const { data } = await getAccessTokenApi({ refreshToken });
+          const { accessToken } = data.result;
 
-            // accessToken set
-            localStorage.setItem('accessToken', accessToken);
+          // accessToken set
+          localStorage.setItem('accessToken', accessToken);
 
-            // request 재요청
-            return API(config);
-          })
-          .catch(() => {
-            localStorage.removeItem('accessToken');
-            localStorage.removeItem('refreshToken');
-            window.location.href = '/';
-          });
+          // multipart/form-data => headers 추가
+          const { method, url } = config;
+          const multipartFormUrlList = ['/user/profile'];
+          if (method === 'patch' && multipartFormUrlList.includes(url)) {
+            config.headers['Content-Type'] = 'multipart/form-data';
+          }
+
+          return API(config);
+        } catch {
+          localStorage.removeItem('accessToken');
+          localStorage.removeItem('refreshToken');
+          window.location.href = '/';
+        }
       }
     }
 

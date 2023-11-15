@@ -21,6 +21,7 @@ const MyPage = () => {
 
   const queryClient = useQueryClient();
   const { userInfoData: user } = useGetUserInfoFetch();
+  const { profileImg, email } = user ?? {};
 
   const fileInputFile = useRef<HTMLInputElement>(null);
 
@@ -66,9 +67,7 @@ const MyPage = () => {
       </div>
       <div className={profile}>
         <div className={profile_img_wrap}>
-          {!!user && (
-            <img className={profile_img} src={user?.profileImg || UserImg} alt="profile-img" />
-          )}
+          {!!user && <img className={profile_img} src={profileImg || UserImg} alt="profile-img" />}
           <div className={profile_btn} onClick={handleFileInputOpen}>
             <Icon name="plus" size="12px" stroke={gray.gray6} />
           </div>
@@ -82,7 +81,7 @@ const MyPage = () => {
         </div>
 
         <Typography variant={TypoVariant.B2} color={white}>
-          {user?.email}
+          {email}
         </Typography>
       </div>
       <div className={logout_icon} onClick={handleLogout}>
