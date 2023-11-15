@@ -1,7 +1,5 @@
-import { GetUserInfoResponse } from '@/apis/user/types';
+import { getUserInfoApi } from '@/apis/user';
 import { LOGIN } from '@/constants/routes/routes';
-import { useGetMutateUserInfoFetch } from '@/hooks/fetch/useUserFetch';
-import { useQueryClient } from '@tanstack/react-query';
 import { ComponentType, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -15,31 +13,28 @@ export const withAuth =
   <P extends object>(props: P) => {
     const navigate = useNavigate();
 
-    const queryClient = useQueryClient();
-    const user = queryClient.getQueryData<GetUserInfoResponse>(['user']);
-    const { getUserInfoMutate } = useGetMutateUserInfoFetch();
-
     useEffect(() => {
-      const accessToken = localStorage.getItem('accessToken');
-      const refreshToken = localStorage.getItem('refreshToken');
+      const checkLoginStatus = async () => {
+        const accessToken = localStorage.getItem('accessToken');
+        const refreshToken = localStorage.getItem('refreshToken');
 
-      if (!accessToken || !refreshToken) {
-        navigate(LOGIN);
-        return;
-      }
+        // 토큰 X => 로그인 페이지로
+        if (!accessToken || !refreshToken) {
+          navigate(LOGIN);
+          return;
+        }
 
-      if (!user) {
-        getUserInfoMutate(void 0, {
-          onSuccess: (res) => {
-            queryClient.setQueryData<GetUserInfoResponse>(['user'], res.data.result);
-          },
-          onError: () => {
-            localStorage.removeItem('accessToken');
-            localStorage.removeItem('refreshToken');
-            navigate(LOGIN);
-          },
-        });
-      }
+        const result = await getUserInfoApi();
+        const user = result.data.result;
+
+        if (!user) {
+          localStorage.removeItem('accessToken');
+          localStorage.removeItem('refreshToken');
+          navigate(LOGIN);
+        }
+      };
+
+      checkLoginStatus();
     }, []);
 
     return <Component {...props} />;
